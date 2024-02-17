@@ -2,32 +2,44 @@
   <main>
     <the-header></the-header>
     <section class="bg-black p-12 text-white">
-      <h1 class="text-3xl text-center font-bold text-blue100">
-        Fil d'actualité
-      </h1>
-      <div class="flex justify-between items-center flex-col gap-5 my-10">
-        <div
-          class="flex flex-col justify-center items-center gap-y-5 sm:flex-row"
+      <div class="flex flex-col items-center md:flex-row md:justify-between">
+        <a href="/" class="custom_btn order-1 md:order-2 w-fit inline-block"
+          >Ajouter vos propes postes</a
         >
-          <input
-            type="search"
-            name="searchPost"
-            id="searchPost"
-            class="custom_input min-w-[200px]"
-            placeholder="Ex : Javascript"
-          />
-          <button class="ml-3 custom_btn">Rechercher des postes</button>
-        </div>
-        <div class="flex flex-col gap-3 items-center sm:flex-row">
-          <p>Rechercher par tags :</p>
-          <div class="flex gap-x-3">
-            <button class="custom_btn">Tech</button>
-            <button class="custom_btn">actualité</button>
-            <button class="custom_btn">Politique</button>
-            <button class="custom_btn">Mode</button>
+        <div
+          class="flex flex-col justify-between items-center gap-5 my-5 order-2 md:order-1"
+        >
+          <div
+            class="flex flex-col justify-between gap-y-5 md:flex-row md:justify-between md:items-center md:w-full"
+          >
+            <input
+              type="search"
+              name="searchPost"
+              id="searchPost"
+              class="custom_input md:w-full"
+              placeholder="Ex : Javascript"
+            />
+            <button class="ml-3 custom_btn text-nowrap">
+              Rechercher par titre de poste
+            </button>
+          </div>
+          <div class="flex flex-col gap-3 items-center md:flex-row">
+            <p>Rechercher par tags :</p>
+            <div class="flex gap-x-3">
+              <button class="custom_btn">Tech</button>
+              <button class="custom_btn">actualité</button>
+              <button class="custom_btn">Politique</button>
+              <button class="custom_btn">Mode</button>
+            </div>
           </div>
         </div>
       </div>
+
+      <h1
+        class="text-2xl font-bold text-blue100 mb-5 border-b inline-block border-blue100"
+      >
+        Fil d'actualité :
+      </h1>
       <div class="flex gap-10 flex-wrap justify-center text-blue400">
         <post-cards v-for="item in 15" :key="item"></post-cards>
       </div>
