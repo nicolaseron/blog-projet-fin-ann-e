@@ -45,7 +45,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
@@ -65,7 +65,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
@@ -85,7 +85,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
@@ -105,7 +105,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
@@ -125,7 +125,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
@@ -145,7 +145,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
@@ -165,7 +165,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
@@ -185,7 +185,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
@@ -205,7 +205,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
@@ -225,7 +225,7 @@
             </p>
             <img
               class="w-32 h-32 rounded-xl"
-              src="/img/ales-nesetril-Im7lZjxeLhg-unsplash.jpg"
+              src="/img/neom-eOWabmCNEdg-unsplash.jpg"
             />
           </div>
         </a>
