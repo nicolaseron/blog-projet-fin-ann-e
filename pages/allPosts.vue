@@ -29,13 +29,11 @@
         </div>
       </div>
       <div class="flex gap-10 flex-wrap justify-center text-blue400">
-        <Postcards v-for="item in 15" :key="item"></Postcards>
+        <post-cards v-for="item in 15" :key="item"></post-cards>
       </div>
     </section>
     <the-footer></the-footer>
   </main>
 </template>
-<script>
-import Postcards from "~/components/postcards.vue";
-</script>
+<script></script>
 <style></style>
