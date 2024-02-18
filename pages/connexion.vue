@@ -1,7 +1,9 @@
 <template>
   <main class="min-h-svh flex flex-col">
     <TheHeader></TheHeader>
-    <section class="bg-black flex justify-center items-center flex-1">
+    <section
+      class="bg-background flex justify-center items-center flex-1 text-darkBlue"
+    >
       <div
         :class="{
           rotationCard: !faceCardVisible,
@@ -9,7 +11,7 @@
         class="card w-72 h-[390px]"
       >
         <div
-          class="card-front bg-blue400 text-blue100 rounded-lg px-5 py-6 flex flex-col gap-5"
+          class="card-front bg-headerFooter text-white rounded-lg px-5 py-6 flex flex-col gap-5"
         >
           <h1 class="text-center font-bold">Inscription</h1>
           <form action="#" class="flex flex-col gap-5">
@@ -65,7 +67,7 @@
           </div>
         </div>
         <div
-          class="card-back bg-blue400 text-blue100 rounded-lg px-5 py-6 flex flex-col gap-5 relative"
+          class="card-back bg-headerFooter text-white rounded-lg px-5 py-6 flex flex-col gap-5 relative"
         >
           <h1 class="text-center font-bold">Connexion</h1>
           <div class="my-auto flex flex-col gap-5">

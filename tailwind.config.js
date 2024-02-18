@@ -11,11 +11,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blue100: "#04bbff",
-        blue200: "#0594d0",
-        blue300: "#007198",
-        blue400: "#003c57",
-        blue500: "#051c24",
+        background: "#f5efe6",
+        headerFooter: "#344d59",
+        darkBlue: "#374158",
       },
     },
   },
