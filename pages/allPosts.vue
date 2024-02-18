@@ -3,8 +3,8 @@
     <the-header></the-header>
     <section class="bg-black p-12 text-white">
       <div class="flex flex-col items-center justify-between md:flex-row">
-        <a href="/" class="custom_btn w-fit order-1 md:order-2"
-          >Ajouter vos propes postes</a
+        <nuxt-link to="addPost" class="custom_btn w-fit order-1 md:order-2"
+          >Ajouter vos propes postes</nuxt-link
         >
         <div class="flex flex-col gap-5 my-5 order-2 md:order-1">
           <div class="flex flex-col gap-y-5 md:flex-row md:w-full">
