@@ -1,7 +1,7 @@
 <template>
   <a
     href="#"
-    class="bg-blue400 text-blue100 rounded-2xl w-96 h-60 overflow-hidden p-5 border border-blue400 hover:border-blue100"
+    class="bg-headerFooter text-white rounded-2xl w-96 h-60 overflow-hidden p-5 border-2 border-headerFooter hover:border-white"
   >
     <h1 class="text-center mb-5">Titre de l'article</h1>
     <div class="flex gap-5">

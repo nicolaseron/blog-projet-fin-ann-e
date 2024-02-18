@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="bg-blue500 border-blue300 py-3 px-2 border-b text-white flex flex-col items-center sm:px-10 sm:flex-row sm:justify-between"
+    class="bg-headerFooter py-3 px-2 text-white flex flex-col items-center sm:px-10 sm:flex-row sm:justify-between"
   >
     <div class="flex items-center gap-5 flex-auto">
       <img
@@ -11,7 +11,7 @@
       <nuxtLink
         to="/"
         title="Retouner sur la page d'accueil"
-        class="text-xl font-bold hover:text-blue200"
+        class="text-xl font-bold"
         >Coffee Time !</nuxtLink
       >
     </div>

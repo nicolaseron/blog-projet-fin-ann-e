@@ -1,7 +1,7 @@
 <template>
   <main>
     <the-header></the-header>
-    <section class="bg-black p-12 text-white">
+    <section class="bg-background p-12 text-darkBlue">
       <div class="flex flex-col items-center justify-between md:flex-row">
         <nuxt-link to="addPost" class="custom_btn w-fit order-1 md:order-2"
           >Ajouter vos propes postes</nuxt-link
@@ -31,12 +31,10 @@
         </div>
       </div>
 
-      <h1
-        class="text-2xl font-bold text-blue100 mb-5 border-b inline-block border-blue100"
-      >
+      <h1 class="text-2xl font-bold mb-5 border-b inline-block border-darkBlue">
         Fil d'actualité :
       </h1>
-      <div class="flex gap-10 flex-wrap justify-center text-blue400">
+      <div class="flex gap-10 flex-wrap justify-center">
         <post-cards v-for="item in 15" :key="item"></post-cards>
       </div>
     </section>

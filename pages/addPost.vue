@@ -1,7 +1,7 @@
 <template>
-  <main class="flex flex-col min-h-svh text-white">
+  <main class="flex flex-col min-h-svh text-darkBlue">
     <the-header></the-header>
-    <section class="bg-black flex-1 flex p-10">
+    <section class="bg-background flex-1 flex p-10">
       <form action="#" class="flex-1">
         <div class="flex flex-col gap-y-5">
           <div class="flex flex-col gap-y-3">
@@ -34,7 +34,7 @@
           <div class="flex gap-x-3">
             <label for="content">Contenu du poste :</label>
             <textarea
-              class="bg-transparent border border-blue100"
+              class="bg-transparent border border-darkBlue"
               name="content"
               id="content"
               v-model="content"
@@ -97,7 +97,7 @@
       <div class="flex-1">
         <h1 class="text-2xl">Rendu sur la page :</h1>
         <div
-          class="border border-blue100 max-w-[700px] h-auto min-h-[90%] mt-5 p-10 break-words"
+          class="border border-darkBlue max-w-[700px] h-auto min-h-[90%] mt-5 p-10 break-words"
         >
           <div class="flex gap-x-2 justify-end text-black">
             <span v-show="techIschecked" class="bg-yellow-300 p-2 rounded-xl"
