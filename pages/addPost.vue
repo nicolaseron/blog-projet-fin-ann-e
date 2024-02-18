@@ -1,7 +1,7 @@
 <template>
   <main class="flex flex-col min-h-svh text-darkBlue">
     <the-header></the-header>
-    <section class="bg-background flex-1 flex p-10">
+    <section class="bg-background flex-1 flex p-10 flex-col lg:flex-row">
       <form action="#" class="flex-1">
         <div class="flex flex-col gap-y-5">
           <div class="flex flex-col gap-y-3">
@@ -32,7 +32,7 @@
             />
           </div>
           <div class="flex gap-x-3">
-            <label for="content">Contenu du poste :</label>
+            <label for="content">Contenu du poste&nbsp;:</label>
             <textarea
               class="bg-transparent border border-darkBlue"
               name="content"
@@ -44,7 +44,7 @@
               rows="10"
             ></textarea>
           </div>
-          <div class="flex">
+          <div class="flex flex-col lg:flex-row">
             <p class="inline-block mr-3">Tags :</p>
             <div class="gap-x-3 flex">
               <div>
@@ -89,17 +89,22 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="custom_btn w-fit self-center">
+          <button
+            type="submit"
+            class="custom_btn w-fit self-center mb-5 lg:mb-0"
+          >
             Ajouter le poste
           </button>
         </div>
       </form>
-      <div class="flex-1">
+      <div class="flex-1 lg:ml-5">
         <h1 class="text-2xl">Rendu sur la page :</h1>
         <div
-          class="border border-darkBlue max-w-[700px] h-auto min-h-[90%] mt-5 p-10 break-words"
+          class="border border-darkBlue max-w-[700px] h-auto min-h-[90%] mt-5 p-5 lg:p-10 break-words"
         >
-          <div class="flex gap-x-2 justify-end text-black">
+          <div
+            class="flex gap-x-2 justify-end text-black flex-wrap gap-y-2 lg:gap-y-0"
+          >
             <span v-show="techIschecked" class="bg-yellow-300 p-2 rounded-xl"
               >Tech</span
             >
