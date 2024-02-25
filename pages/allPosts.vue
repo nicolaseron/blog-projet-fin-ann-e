@@ -35,11 +35,13 @@
         Fil d'actualité :
       </h1>
       <div class="flex gap-10 flex-wrap justify-center">
-        <post-cards v-for="item in 15" :key="item"></post-cards>
+        <PostCards v-for="item in 15" :key="item"></PostCards>
       </div>
     </section>
     <the-footer></the-footer>
   </main>
 </template>
-<script></script>
+<script setup>
+
+</script>
 <style></style>
