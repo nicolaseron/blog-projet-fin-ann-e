@@ -8,7 +8,7 @@
         :class="{
           rotationCard: !faceCardVisible,
         }"
-        class="card w-72 h-[390px]"
+        class="card w-72 h-[390px] sm:w-80 md:w-96 sm:h-[450px]"
       >
         <div
           class="card-front bg-headerFooter text-white rounded-lg px-5 py-6 flex flex-col gap-5"
