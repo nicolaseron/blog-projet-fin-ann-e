@@ -2,12 +2,14 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/css/main.css", "~/assets/css/base.css"],
-  modules: ["@nuxtjs/tailwindcss" , '@nuxt/image'],
+  modules: ["@nuxtjs/tailwindcss", '@nuxt/image'],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+  runtimeConfig: {
+    dbUrl: process.env.DB_URL,
+  },
 });
-  

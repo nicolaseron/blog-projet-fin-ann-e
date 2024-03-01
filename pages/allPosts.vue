@@ -30,18 +30,18 @@
           </div>
         </div>
       </div>
-
       <h1 class="text-2xl font-bold mb-5 border-b inline-block border-darkBlue">
         Fil d'actualité :
       </h1>
       <div class="flex gap-10 flex-wrap justify-center">
-        <PostCards v-for="item in 15" :key="item"></PostCards>
+        <PostCards v-for="post in data" :key="post" :title="post.title" :content="post.content"></PostCards>
       </div>
     </section>
     <the-footer></the-footer>
+    <pre>{{ data }}</pre>
   </main>
 </template>
-<script setup>
-
+<script setup lang="ts">
+const { data } = useFetch("/api/posts")
 </script>
 <style></style>
