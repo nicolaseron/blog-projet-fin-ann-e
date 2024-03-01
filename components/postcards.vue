@@ -1,7 +1,7 @@
 <template>
   <nuxt-link to="/">
     <div
-      class="bg-headerFooter text-white rounded-2xl overflow-hidden p-5 w-[300px] h-[315px] sm:w-[500px]"
+      class="bg-headerFooter text-white rounded-2xl overflow-hidden p-5 w-[300px] h-[315px] sm:w-[500px] border-2 border-headerFooter hover:bg-darkBlue hover:border-white"
     >
       <h1 class="text-center mb-5 text-2xl">{{ title }}</h1>
       <div class="flex gap-5 justify-between">
