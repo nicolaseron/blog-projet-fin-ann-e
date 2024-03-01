@@ -1,7 +1,7 @@
 <template>
-  <main>
+  <main class="flex flex-col min-h-svh text-darkBlue">
     <the-header></the-header>
-    <section class="bg-background p-12 text-darkBlue">
+    <section class="bg-background p-12 text-darkBlue flex-1">
       <div class="flex flex-col items-center justify-between md:flex-row">
         <nuxt-link to="addPost" class="custom_btn w-fit order-1 md:order-2"
           >Ajouter vos propes postes</nuxt-link
@@ -30,7 +30,7 @@
           </div>
         </div>
       </div>
-      <h1 class="text-2xl font-bold mb-5 border-b inline-block border-darkBlue">
+      <h1 class="text-2xl font-bold mb-10 border-b inline-block border-darkBlue">
         Fil d'actualité :
       </h1>
       <div class="flex gap-10 flex-wrap justify-center">

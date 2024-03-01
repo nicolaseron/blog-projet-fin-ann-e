@@ -2,7 +2,7 @@
   <main class="flex flex-col min-h-svh text-darkBlue">
     <the-header></the-header>
     <section class="bg-background flex-1 flex p-10 flex-col lg:flex-row">
-      <form action="#" class="flex-1">
+      <form @submit="sendPost" class="flex-1">
         <div class="flex flex-col gap-y-5">
           <div class="flex flex-col gap-y-3">
             <label for="image"
@@ -108,7 +108,7 @@
             <span v-show="techIschecked" class="bg-yellow-300 p-2 rounded-xl"
               >Tech</span
             >
-            <span v-show="healthIschecked" class="bg-gray-400 p-2 rounded-xl"
+            <span v-show="healthIschecked" class="bg-red-500 p-2 rounded-xl"
               >Santé</span
             >
             <span v-show="politicIschecked" class="bg-blue-400 p-2 rounded-xl"
@@ -120,7 +120,7 @@
           </div>
           <img
             ref="previewImage"
-            class="max-h-[300px] w-full object-cover my-5"
+            class="max-h-[300px] w-full object-contain my-5"
           />
           <h2 class="text-xl font-bold mb-8">{{ title }}</h2>
           <p class="whitespace-pre-line">{{ content }}</p>
@@ -150,5 +150,8 @@ function addPreviewImg(e) {
 
     reader.readAsDataURL(file);
   }
+}
+function sendPost() {
+  console.log("hello");
 }
 </script>
