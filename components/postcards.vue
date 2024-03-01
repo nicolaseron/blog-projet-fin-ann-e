@@ -14,7 +14,7 @@
   </a>
 </template>
 <script setup lang="ts">
-const propos = defineProps<{
+const props = defineProps<{
   title: string,
   content : string,
 }>()

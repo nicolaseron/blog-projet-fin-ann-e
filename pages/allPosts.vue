@@ -38,7 +38,6 @@
       </div>
     </section>
     <the-footer></the-footer>
-    <pre>{{ data }}</pre>
   </main>
 </template>
 <script setup lang="ts">
