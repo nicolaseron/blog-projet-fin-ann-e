@@ -151,7 +151,31 @@ function addPreviewImg(e) {
     reader.readAsDataURL(file);
   }
 }
-function sendPost() {
-  console.log("hello");
+async function sendPost() {
+
+  try {
+    const response = await fetch("/api/form", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title.value,
+        content: content.value,
+        image: previewImage.value.src,
+        techTags: techIschecked.value,
+        modeTags: modeIschecked.value,
+        healthTags: healthIschecked.value,
+        politicsTags: politicIschecked.value,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      console.log("Post sent successfully");
+    } else {
+      console.error("Error sending post");
+    }
+  } catch (err) {
+    console.log("erreur lors de l'envoi du formulaire", err);
+  }
 }
 </script>
