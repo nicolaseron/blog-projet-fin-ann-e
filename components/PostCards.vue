@@ -6,10 +6,7 @@
       <h1 class="text-center mb-5 text-2xl">{{ title }}</h1>
       <div class="flex gap-5 justify-between">
         <p class="text-wrap break-words w-[50%]">{{ content }}</p>
-        <nuxt-picture
-          class="min-w-32 h-auto rounded-xl flex-1"
-          src="/img/neom-eOWabmCNEdg-unsplash.jpg"
-        >
+        <nuxt-picture class="min-w-32 h-auto rounded-xl flex-1" :src="src" >
         </nuxt-picture>
       </div>
     </div>
@@ -19,5 +16,6 @@
 const props = defineProps<{
   title: string;
   content: string;
+  src: string;
 }>();
 </script>

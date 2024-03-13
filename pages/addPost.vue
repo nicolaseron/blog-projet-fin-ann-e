@@ -2,7 +2,7 @@
   <main class="flex flex-col min-h-svh text-darkBlue">
     <the-header></the-header>
     <section class="bg-background flex-1 flex p-10 flex-col lg:flex-row">
-      <form @submit="sendPost" class="flex-1">
+      <form @submit="sendPost" class="flex-1" ref="myForm">
         <div class="flex flex-col gap-y-5">
           <div class="flex flex-col gap-y-3">
             <label for="image"
@@ -138,6 +138,7 @@ const healthIschecked = ref(false);
 const politicIschecked = ref(false);
 const modeIschecked = ref(false);
 const previewImage = ref(null);
+const myForm = ref(null);
 function addPreviewImg(e) {
   const file = e.target.files[0];
 
@@ -152,22 +153,11 @@ function addPreviewImg(e) {
   }
 }
 async function sendPost() {
-
+  const dataForm = new FormData(myForm.value);
   try {
     const response = await fetch("/api/form", {
       method: "POST",
-      body: JSON.stringify({
-        title: title.value,
-        content: content.value,
-        image: previewImage.value.src,
-        techTags: techIschecked.value,
-        modeTags: modeIschecked.value,
-        healthTags: healthIschecked.value,
-        politicsTags: politicIschecked.value,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: dataForm,
     });
     if (response.ok) {
       console.log("Post sent successfully");
