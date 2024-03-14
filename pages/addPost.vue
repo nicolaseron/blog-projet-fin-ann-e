@@ -159,6 +159,7 @@ async function sendPost() {
       method: "POST",
       body: dataForm,
     });
+    console.log(dataForm)
     if (response.ok) {
       console.log("Post sent successfully");
     } else {
