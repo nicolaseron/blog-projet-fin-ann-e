@@ -23,16 +23,10 @@ export default defineEventHandler(async (event) => {
             data.content = body[2].data.toString()
         }
         const insertPost =
-            "INSERT INTO posts (id_profil, title, content) VALUES ($1, $2, $3)";
-        await client.query(insertPost, [1, data.title, data.content]);
-        const queryIdPost = await client.query(
-            `SELECT id
-             FROM posts
-             WHERE title = '${data.title}'
-               AND content = '${data.content}'`
-        );
+            "INSERT INTO posts (id_profil, title, content) VALUES ($1, $2, $3) RETURNING id";
+        const insertQueryPost = await client.query(insertPost, [1, data.title, data.content]);
 
-        const idPost = queryIdPost.rows[0].id;
+        const idPost = insertQueryPost.rows[0].id;
 
         const keyImg = `image_post_${idPost}`
         const params = {
