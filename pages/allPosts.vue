@@ -68,4 +68,5 @@
 </template>
 <script setup lang="ts">
 const {data} = useFetch("/api/posts");
+console.log(data)
 </script>
