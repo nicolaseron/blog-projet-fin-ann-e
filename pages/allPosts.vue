@@ -23,10 +23,10 @@
           <div class="flex flex-col gap-3 items-center md:flex-row">
             <p>Rechercher par tags :</p>
             <div class="flex gap-x-3">
-              <button class="custom_btn">Tech</button>
-              <button class="custom_btn">actualité</button>
-              <button class="custom_btn">Politique</button>
-              <button class="custom_btn">Mode</button>
+              <button @click="toggleFilter(1)" class="custom_btn" :class="{ 'focusBtn': filterTag === 1 }">Tech</button>
+              <button @click="toggleFilter(2)" class="custom_btn" :class="{ 'focusBtn': filterTag === 2 }">Santé</button>
+              <button @click="toggleFilter(3)" class="custom_btn" :class="{ 'focusBtn': filterTag === 3 }">Politique</button>
+              <button @click="toggleFilter(4)" class="custom_btn" :class="{ 'focusBtn': filterTag === 4 }">Mode</button>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
       </h1>
       <div class="flex gap-10 flex-wrap justify-center">
         <PostCards
-            v-for="post in data"
+            v-for="post in postToDisplay"
             :key="post.id"
             :title="post.title"
             :content="post.content"
@@ -67,6 +67,35 @@
   </main>
 </template>
 <script setup lang="ts">
-const {data} = useFetch("/api/posts");
-console.log(data)
+const { data } = useFetch("/api/posts");
+const filteredPost = ref();
+const filterTag = ref();
+
+const postToDisplay = computed(() => {
+  if (filterTag.value) {
+    return filteredPost.value.filter(post => post.id_tags.includes(filterTag.value));
+  } else {
+    return data.value;
+  }
+});
+
+function toggleFilter(tag: number) {
+  if (filterTag.value === tag) {
+    filterTag.value = null;
+  } else {
+    filterTag.value = tag;
+  }
+}
+
+onMounted(() => {
+  filteredPost.value = data.value;
+});
+
 </script>
+
+<style scoped>
+.focusBtn {
+  box-shadow: inset 0 -3em 0 0 #374158;
+  color: white;
+}
+</style>

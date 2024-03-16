@@ -6,6 +6,7 @@
   box-shadow: inset 0 -3em 0 0 #374158;
   color: white;
 }
+
 .custom_input {
   @apply bg-transparent outline-none border-b border-darkBlue;
 }
