@@ -15,6 +15,7 @@
                 id="searchPost"
                 class="custom_input md:w-full"
                 placeholder="Ex : Javascript"
+                @input="searchPost"
             />
             <button class="ml-3 custom_btn text-nowrap">
               Rechercher par titre de poste
@@ -23,10 +24,18 @@
           <div class="flex flex-col gap-3 items-center md:flex-row">
             <p>Rechercher par tags :</p>
             <div class="flex gap-x-3">
-              <button @click="toggleFilter(1)" class="custom_btn" :class="{ 'focusBtn': filterTag === 1 }">Tech</button>
-              <button @click="toggleFilter(2)" class="custom_btn" :class="{ 'focusBtn': filterTag === 2 }">Santé</button>
-              <button @click="toggleFilter(3)" class="custom_btn" :class="{ 'focusBtn': filterTag === 3 }">Politique</button>
-              <button @click="toggleFilter(4)" class="custom_btn" :class="{ 'focusBtn': filterTag === 4 }">Mode</button>
+              <button @click="toggleFilter(1)" class="custom_btn"
+                      :class="{ 'focusBtn': filterTag === 1 && !filterText.length }">Tech
+              </button>
+              <button @click="toggleFilter(2)" class="custom_btn"
+                      :class="{ 'focusBtn': filterTag === 2 && !filterText.length }">Santé
+              </button>
+              <button @click="toggleFilter(3)" class="custom_btn"
+                      :class="{ 'focusBtn': filterTag === 3 && !filterText.length }">Politique
+              </button>
+              <button @click="toggleFilter(4)" class="custom_btn"
+                      :class="{ 'focusBtn': filterTag === 4 && !filterText.length }">Mode
+              </button>
             </div>
           </div>
         </div>
@@ -67,17 +76,17 @@
   </main>
 </template>
 <script setup lang="ts">
-const { data } = useFetch("/api/posts");
+const {data} = useFetch("/api/posts");
 const filteredPost = ref();
 const filterTag = ref();
-
-const postToDisplay = computed(() => {
-  if (filterTag.value) {
-    return filteredPost.value.filter(post => post.id_tags.includes(filterTag.value));
-  } else {
-    return data.value;
-  }
+const filterText = ref("")
+onMounted(() => {
+  filteredPost.value = data.value;
 });
+
+function searchPost(e: Event) {
+  filterText.value = (e.target as HTMLInputElement).value
+}
 
 function toggleFilter(tag: number) {
   if (filterTag.value === tag) {
@@ -87,8 +96,16 @@ function toggleFilter(tag: number) {
   }
 }
 
-onMounted(() => {
-  filteredPost.value = data.value;
+const postToDisplay = computed(() => {
+  if (filterText.value) {
+    filterTag.value = null;
+    return filteredPost.value.filter((post: { title: string }) => post.title.includes(filterText.value))
+  }
+  if (filterTag.value) {
+    return filteredPost.value.filter((post: { id_tags: number[]; }) => post.id_tags.includes(filterTag.value));
+  } else {
+    return data.value;
+  }
 });
 
 </script>
