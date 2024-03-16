@@ -23,6 +23,7 @@
 
 <script setup>
 const text = `Bienvenue sur le blog Coffee Time !`;
+const title = ref("");
 function typeWriter(word, index) {
   if (index < word.length) {
     setTimeout(() => {
