@@ -8,7 +8,8 @@
         </nuxt-link
         >
         <div class="flex flex-col gap-5 my-5 order-2 md:order-1">
-          <div class="flex flex-col gap-y-5 md:flex-row md:w-full">
+          <div class="flex flex-col gap-3 md:flex-row md:w-full">
+            <p class="text-nowrap">Recherchr par titre de poste : </p>
             <input
                 type="search"
                 name="searchPost"
@@ -17,9 +18,6 @@
                 placeholder="Ex : Javascript"
                 @input="searchPost"
             />
-            <button class="ml-3 custom_btn text-nowrap">
-              Rechercher par titre de poste
-            </button>
           </div>
           <div class="flex flex-col gap-3 items-center md:flex-row">
             <p>Rechercher par tags :</p>
@@ -85,7 +83,7 @@ onMounted(() => {
 });
 
 function searchPost(e: Event) {
-  filterText.value = (e.target as HTMLInputElement).value
+  filterText.value = (e.target as HTMLInputElement).value.toLowerCase()
 }
 
 function toggleFilter(tag: number) {
@@ -99,7 +97,7 @@ function toggleFilter(tag: number) {
 const postToDisplay = computed(() => {
   if (filterText.value) {
     filterTag.value = null;
-    return filteredPost.value.filter((post: { title: string }) => post.title.includes(filterText.value))
+    return filteredPost.value.filter((post: { title: string }) => post.title.toLowerCase().includes(filterText.value))
   }
   if (filterTag.value) {
     return filteredPost.value.filter((post: { id_tags: number[]; }) => post.id_tags.includes(filterTag.value));
