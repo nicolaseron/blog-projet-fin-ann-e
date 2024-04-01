@@ -131,6 +131,8 @@
   </main>
 </template>
 <script setup>
+definePageMeta({ middleware: 'auth' })
+
 const title = ref("");
 const content = ref("");
 const techIschecked = ref(false);

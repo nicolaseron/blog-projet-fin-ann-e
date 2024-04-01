@@ -74,6 +74,8 @@
   </main>
 </template>
 <script setup lang="ts">
+import {useAuth} from "#imports";
+
 const {data} = useFetch("/api/posts");
 const filteredPost = ref();
 const filterTag = ref();
