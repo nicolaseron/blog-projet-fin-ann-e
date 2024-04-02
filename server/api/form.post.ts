@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
         }
         const insertPost =
             "INSERT INTO posts (id_profil, title, content) VALUES ($1, $2, $3) RETURNING id";
-        const insertQueryPost = await client.query(insertPost, [2, data.title, data.content]);
+        const insertQueryPost = await client.query(insertPost, [12, data.title, data.content]);
 
         const idPost = insertQueryPost.rows[0].id;
 
