@@ -164,7 +164,7 @@ async function sendPost() {
       body: dataForm,
     });
     if (response.ok) {
-      console.log("Post sent successfully");
+      navigateTo("allPosts")
     } else {
       console.error("Error sending post");
     }

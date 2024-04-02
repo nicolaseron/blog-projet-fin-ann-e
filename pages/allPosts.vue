@@ -74,15 +74,9 @@
   </main>
 </template>
 <script setup lang="ts">
-import {useAuth} from "#imports";
-
 const {data} = useFetch("/api/posts");
-const filteredPost = ref();
 const filterTag = ref();
 const filterText = ref("")
-onMounted(() => {
-  filteredPost.value = data.value;
-});
 
 function searchPost(e: Event) {
   filterText.value = (e.target as HTMLInputElement).value.toLowerCase()
@@ -97,17 +91,19 @@ function toggleFilter(tag: number) {
 }
 
 const postToDisplay = computed(() => {
-  if (filterText.value) {
+  if (!filterText.value.length && !filterTag.value) {
+    return data.value
+  } else if (filterText.value) {
     filterTag.value = null;
-    return filteredPost.value.filter((post: { title: string }) => post.title.toLowerCase().includes(filterText.value))
-  }
-  if (filterTag.value) {
-    return filteredPost.value.filter((post: { id_tags: number[]; }) => post.id_tags.includes(filterTag.value));
-  } else {
-    return data.value;
+    if (data.value) {
+      return data.value.filter((post: { title: string }) => post.title.toLowerCase().includes(filterText.value))
+    }
+  } else if (filterTag.value) {
+    if (data.value) {
+      return data.value.filter((post: { id_tags: number[]; }) => post.id_tags.includes(filterTag.value));
+    }
   }
 });
-
 </script>
 
 <style scoped>
