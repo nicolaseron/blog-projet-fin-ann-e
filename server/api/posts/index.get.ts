@@ -4,7 +4,6 @@ export default defineEventHandler(async () => {
             SELECT posts.id,
                    posts.title,
                    posts.content,
-                   posts.created_date,
                    images.img_link,
                    intermediary_tags_posts.id_tags
             FROM posts

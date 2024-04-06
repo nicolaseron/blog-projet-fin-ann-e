@@ -50,23 +50,24 @@
             :title="post.title"
             :content="post.content"
             :src="post.img_link"
+            :to="`/posts/${post.id}`"
         >
-          <div
-              class="flex gap-x-2 justify-end text-black flex-wrap gap-y-2 lg:gap-y-0 mb-2"
-          >
+            <div
+                class="flex gap-x-2 justify-end text-black flex-wrap gap-y-2 lg:gap-y-0 mb-2"
+            >
             <span v-if="post.id_tags.includes(1)" class="bg-yellow-300 p-2 rounded-xl"
             >Tech</span
             >
-            <span v-if="post.id_tags.includes(2)" class="bg-red-500 p-2 rounded-xl"
-            >Santé</span
-            >
-            <span v-if="post.id_tags.includes(3)" class="bg-blue-400 p-2 rounded-xl"
-            >Politique</span
-            >
-            <span v-if="post.id_tags.includes(4)" class="bg-pink-400 p-2 rounded-xl"
-            >Mode</span
-            >
-          </div>
+              <span v-if="post.id_tags.includes(2)" class="bg-red-500 p-2 rounded-xl"
+              >Santé</span
+              >
+              <span v-if="post.id_tags.includes(3)" class="bg-blue-400 p-2 rounded-xl"
+              >Politique</span
+              >
+              <span v-if="post.id_tags.includes(4)" class="bg-pink-400 p-2 rounded-xl"
+              >Mode</span
+              >
+            </div>
         </PostCards>
       </div>
     </section>
