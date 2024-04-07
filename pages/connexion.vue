@@ -36,11 +36,11 @@
               <a href="#" class="mb-5 hover:underline">Mot de passe oublié ?</a>
               <div class="text-center">
                 <button type="submit" class="custom_btn">Me connecter</button>
+                <p v-if="signUpErrorMessage" class="text-red-500 mt-5" v-html="signUpErrorMessage"></p>
               </div>
             </div>
           </form>
           <div class="text-center">
-            <p v-if="signUpErrorMessage" class="text-red-500" v-html="signUpErrorMessage"></p>
             <button
                 @click="toggleFaceCard"
                 class="rotate_btn hover:underline absolute bottom-3 text-nowrap left-1/2 -translate-x-1/2"

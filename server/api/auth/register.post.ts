@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+
 export default defineEventHandler(async event => {
     const response = await readFormData(event)
     const userEmail = response.get('email')
@@ -24,9 +26,19 @@ export default defineEventHandler(async event => {
             statusMessage: "pseudoExist"
         })
     } else {
-        const insertProfil =
-            "INSERT INTO profil (first_name , last_name , mail , password , pseudo) VALUES ($1 , $2 , $3 , $4 , $5)"
-        const insertIntoDB =
-            await client.query(insertProfil, [userFirstName, userLastName, userEmail, userPassword, userPseudo])
+        // @ts-ignore
+        bcrypt.hash(userPassword, 10, async function (err:any, hash:string) {
+            if (err) {
+                throw createError({
+                    statusCode: 400,
+                    statusMessage: "Une erreure s'est produite"
+                })
+            } else {
+                const insertProfil =
+                    "INSERT INTO profil (first_name , last_name , mail , password , pseudo) VALUES ($1 , $2 , $3 , $4 , $5)"
+                const insertIntoDB =
+                    await client.query(insertProfil, [userFirstName, userLastName, userEmail, hash, userPseudo])
+            }
+        })
     }
 })
