@@ -45,8 +45,7 @@
       </h1>
       <div class="flex gap-10 flex-wrap justify-center">
         <PostCards
-            v-if="postToDisplay.length"
-            v-for="(post,i) in postToDisplay"
+            v-for="(post,i) in postToDisplay || []"
             :key="post.id"
             :title="post.title"
             :content="post.content"
@@ -63,7 +62,7 @@
              {{ post.tags }}
           </span>
         </PostCards>
-        <div v-else>
+        <div v-if="!postToDisplay || postToDisplay.length === 0">
           <p>Désoler il n'y a aucun poste à afficher !</p>
         </div>
       </div>
@@ -73,7 +72,6 @@
 </template>
 <script setup lang="ts">
 const {data} = useFetch("/api/posts");
-console.log(data.value)
 const filterTag = ref();
 const filterText = ref("")
 

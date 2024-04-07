@@ -9,20 +9,12 @@ export default defineEventHandler(async event => {
                                              from profil
                                              where mail = '${response.email}'`)
     const hash = selectProfil.rows[0];
-    const result = await new Promise<boolean>((resolve, reject) => {
-        bcrypt.compare(response.password, hash.password, (err, result) => {
-            if (err || !result) {
-                reject(err);
-            } else {
-                resolve(result);
-            }
-        });
-    });
+    const result = await bcrypt.compare(response.password, hash.password);
 
     if (!result) {
         throw createError({
-            statusCode: 400,
-            statusMessage: "Invalid password"
+            statusCode: 401,
+            message: "Invalid password"
         });
     }
 
