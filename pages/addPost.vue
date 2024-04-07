@@ -133,6 +133,9 @@
 <script setup>
 definePageMeta({ middleware: 'auth' })
 
+const {data} = useAuth()
+
+const idProfil = data.value.response.id
 const title = ref("");
 const content = ref("");
 const techIschecked = ref(false);
@@ -159,6 +162,7 @@ function addPreviewImg(e) {
 async function sendPost() {
   const dataForm = new FormData(myForm.value);
   try {
+    dataForm.set("idProfil" , idProfil)
     const response = await fetch("/api/form", {
       method: "POST",
       body: dataForm,

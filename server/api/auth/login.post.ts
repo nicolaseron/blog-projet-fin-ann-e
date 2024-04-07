@@ -26,10 +26,11 @@ export default defineEventHandler(async event => {
         });
     }
 
-    const profil = await client.query(`SELECT first_name, last_name, pseudo, bio
+    const profil = await client.query(`SELECT id, first_name, last_name, pseudo, bio
                                        FROM profil
                                        WHERE id = ${selectProfil.rows[0].id}`)
     const profilData = profil.rows[0]
+    response.id = profilData.id
     response.firstName = profilData.first_name
     response.lastName = profilData.last_name
     response.pseudo = profilData.pseudo
