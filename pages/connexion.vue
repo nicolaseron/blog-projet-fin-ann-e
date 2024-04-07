@@ -33,7 +33,7 @@
                   class="custom_input"
                   v-model="signInPassword"
               />
-              <a href="#" class="mb-5 hover:underline">Mot de passe oublié ?</a>
+<!--              <a href="#" class="mb-5 hover:underline">Mot de passe oublié ?</a>-->
               <div class="text-center">
                 <button type="submit" class="custom_btn">Me connecter</button>
                 <p v-if="signUpErrorMessage" class="text-red-500 mt-5" v-html="signUpErrorMessage"></p>

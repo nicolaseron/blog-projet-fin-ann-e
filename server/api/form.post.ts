@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
         imgData?: string | Buffer;
         title?: string;
         content?: string;
+        idProfil?:string;
         tags?: string[] | undefined
     }
 
@@ -23,6 +24,7 @@ export default defineEventHandler(async (event) => {
             data.imgData = body[0].data
             data.title = body[1].data.toString()
             data.content = body[2].data.toString()
+            data.idProfil = body[4].data.toString()
             data.tags = []
             body.forEach((el) => {
                 if (!data.tags) {
@@ -46,7 +48,7 @@ export default defineEventHandler(async (event) => {
         }
         const insertPost =
             "INSERT INTO posts (id_profil, title, content) VALUES ($1, $2, $3) RETURNING id";
-        const insertQueryPost = await client.query(insertPost, [12, data.title, data.content]);
+        const insertQueryPost = await client.query(insertPost, [data.idProfil, data.title, data.content]);
 
         const idPost = insertQueryPost.rows[0].id;
 
