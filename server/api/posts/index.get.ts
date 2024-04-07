@@ -4,11 +4,10 @@ export default defineEventHandler(async () => {
             SELECT posts.id,
                    posts.title,
                    posts.content,
-                   images.img_link,
-                   intermediary_tags_posts.id_tags
+                   posts.tags,
+                   images.img_link
             FROM posts
                      JOIN images on images.id_post = posts.id
-                     JOIN intermediary_tags_posts ON intermediary_tags_posts.id_posts = posts.id
             ORDER BY posts.id desc
         `);
         return result.rows;

@@ -1,5 +1,5 @@
 <template>
-  <main class="flex flex-col min-h-svh text-darkBlue">
+  <main class="flex flex-col min-h-svh text-darkBlue relative">
     <the-header></the-header>
     <section class="bg-background flex-1 flex p-10 flex-col lg:flex-row">
       <form @submit.prevent="sendPost" class="flex-1" ref="myForm">
@@ -18,6 +18,8 @@
                 id="image"
                 accept=".png,.jpg,.jpeg,.webp"
                 @change="addPreviewImg"
+                required
+                ref="img"
             />
           </div>
           <div>
@@ -49,43 +51,54 @@
             <div class="gap-x-3 flex">
               <div>
                 <input
-                    type="checkbox"
-                    name="tech"
+                    type="radio"
+                    name="tags"
                     id="tech"
                     value="tech"
-                    v-model="techIschecked"
+                    v-model="tagValue"
+                    required
                 />
                 <label for="tech" class="ml-1">Tech</label>
               </div>
               <div>
                 <input
-                    type="checkbox"
-                    name="sante"
+                    type="radio"
+                    name="tags"
                     id="sante"
                     value="sante"
-                    v-model="healthIschecked"
+                    v-model="tagValue"
                 />
                 <label for="sante" class="ml-1">Santé</label>
               </div>
               <div>
                 <input
-                    type="checkbox"
-                    name="politique"
+                    type="radio"
+                    name="tags"
                     id="politique"
                     value="politique"
-                    v-model="politicIschecked"
+                    v-model="tagValue"
                 />
                 <label for="politique" class="ml-1">Politique</label>
               </div>
               <div>
                 <input
-                    type="checkbox"
-                    name="mode"
+                    type="radio"
+                    name="tags"
                     id="mode"
                     value="mode"
-                    v-model="modeIschecked"
+                    v-model="tagValue"
                 />
                 <label for="mode" class="ml-1">Mode</label>
+              </div>
+              <div>
+                <input
+                    type="radio"
+                    name="tags"
+                    id="autre"
+                    value="autre"
+                    v-model="tagValue"
+                />
+                <label for="autre" class="ml-1">Autre</label>
               </div>
             </div>
           </div>
@@ -100,27 +113,14 @@
       <div class="flex-1 lg:ml-5">
         <h1 class="text-2xl">Rendu sur la page :</h1>
         <div
-            class="border border-darkBlue max-w-[700px] h-auto min-h-[90%] mt-5 p-5 lg:p-10 break-words"
+            class="border border-darkBlue max-w-[700px] h-auto min-h-[90%] mt-5 px-5 lg:px-10 break-words "
         >
-          <div
-              class="flex gap-x-2 justify-end text-black flex-wrap gap-y-2 lg:gap-y-0"
-          >
-            <span v-show="techIschecked" class="bg-yellow-300 p-2 rounded-xl"
-            >Tech</span
-            >
-            <span v-show="healthIschecked" class="bg-red-500 p-2 rounded-xl"
-            >Santé</span
-            >
-            <span v-show="politicIschecked" class="bg-blue-400 p-2 rounded-xl"
-            >Politique</span
-            >
-            <span v-show="modeIschecked" class="bg-pink-400 p-2 rounded-xl"
-            >Mode</span
-            >
-          </div>
+            <span v-show="tagValue" :class="tagClass" class="p-2 rounded-xl inline-block float-right my-3">
+              {{ tagValue }}
+            </span>
           <img
               ref="previewImage"
-              class="max-h-[300px] w-full object-contain my-5"
+              class="max-h-[200px] w-full object-contain my-5"
           />
           <h2 class="text-xl font-bold mb-8">{{ title }}</h2>
           <p class="whitespace-pre-line">{{ content }}</p>
@@ -128,22 +128,36 @@
       </div>
     </section>
     <the-footer></the-footer>
+    <div class="absolute bottom-16 right-10 bg-green-500 text-center rounded-3xl p-5 opacity-0"
+         :class="{active : succesPostSend}">
+      <h2>Votre article est bien ajouté ! &#x1F389;</h2>
+      <p>Vous pouvez le consultez depuis la page
+        <nuxt-link to="/allPosts" class="underline text-blue-600">des postes</nuxt-link>
+      </p>
+    </div>
   </main>
 </template>
 <script setup>
-definePageMeta({ middleware: 'auth' })
+definePageMeta({middleware: 'auth'})
 
 const {data} = useAuth()
 
 const idProfil = data.value.response.id
 const title = ref("");
 const content = ref("");
-const techIschecked = ref(false);
-const healthIschecked = ref(false);
-const politicIschecked = ref(false);
-const modeIschecked = ref(false);
 const previewImage = ref(null);
 const myForm = ref(null);
+const tagValue = ref("")
+const tagClass = computed(() => {
+  return {
+    'bg-blue-400': tagValue.value === 'autre',
+    'bg-green-400': tagValue.value === 'tech',
+    'bg-red-400': tagValue.value === 'sante',
+    'bg-yellow-400': tagValue.value === 'politique',
+    'bg-purple-400': tagValue.value === 'mode'
+  }
+})
+const succesPostSend = ref(false)
 
 function addPreviewImg(e) {
   const file = e.target.files[0];
@@ -158,17 +172,25 @@ function addPreviewImg(e) {
     reader.readAsDataURL(file);
   }
 }
+function resetForm() {
+  myForm.value.reset()
+  title.value=""
+  content.value=""
+  tagValue.value=""
+  previewImage.value.src =""
+}
 
 async function sendPost() {
   const dataForm = new FormData(myForm.value);
   try {
-    dataForm.set("idProfil" , idProfil)
+    dataForm.set("idProfil", idProfil)
     const response = await fetch("/api/form", {
       method: "POST",
       body: dataForm,
     });
     if (response.ok) {
-      navigateTo("allPosts")
+      succesPostSend.value = true
+      resetForm()
     } else {
       console.error("Error sending post");
     }
@@ -177,3 +199,10 @@ async function sendPost() {
   }
 }
 </script>
+
+<style scoped>
+.active {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+</style>

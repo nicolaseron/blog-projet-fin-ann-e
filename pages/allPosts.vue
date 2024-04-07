@@ -22,17 +22,17 @@
           <div class="flex flex-col gap-3 items-center md:flex-row">
             <p>Rechercher par tags :</p>
             <div class="flex gap-x-3">
-              <button @click="toggleFilter(1)" class="custom_btn"
-                      :class="{ 'focusBtn': filterTag === 1 && !filterText.length }">Tech
+              <button @click="toggleFilter('tech')" class="custom_btn"
+                      :class="{ 'focusBtn': filterTag === 'tech' && !filterText.length }">Tech
               </button>
-              <button @click="toggleFilter(2)" class="custom_btn"
-                      :class="{ 'focusBtn': filterTag === 2 && !filterText.length }">Santé
+              <button @click="toggleFilter('sante')" class="custom_btn"
+                      :class="{ 'focusBtn': filterTag === 'sante' && !filterText.length }">Santé
               </button>
-              <button @click="toggleFilter(3)" class="custom_btn"
-                      :class="{ 'focusBtn': filterTag === 3 && !filterText.length }">Politique
+              <button @click="toggleFilter('politique')" class="custom_btn"
+                      :class="{ 'focusBtn': filterTag === 'politique' && !filterText.length }">Politique
               </button>
-              <button @click="toggleFilter(4)" class="custom_btn"
-                      :class="{ 'focusBtn': filterTag === 4 && !filterText.length }">Mode
+              <button @click="toggleFilter('mode')" class="custom_btn"
+                      :class="{ 'focusBtn': filterTag === 'mode' && !filterText.length }">Mode
               </button>
             </div>
           </div>
@@ -45,30 +45,27 @@
       </h1>
       <div class="flex gap-10 flex-wrap justify-center">
         <PostCards
-            v-for="post in postToDisplay"
+            v-if="postToDisplay.length"
+            v-for="(post,i) in postToDisplay"
             :key="post.id"
             :title="post.title"
             :content="post.content"
             :src="post.img_link"
             :to="`/posts/${post.id}`"
         >
-            <div
-                class="flex gap-x-2 justify-end text-black flex-wrap gap-y-2 lg:gap-y-0 mb-2"
-            >
-            <span v-if="post.id_tags.includes(1)" class="bg-yellow-300 p-2 rounded-xl"
-            >Tech</span
-            >
-              <span v-if="post.id_tags.includes(2)" class="bg-red-500 p-2 rounded-xl"
-              >Santé</span
-              >
-              <span v-if="post.id_tags.includes(3)" class="bg-blue-400 p-2 rounded-xl"
-              >Politique</span
-              >
-              <span v-if="post.id_tags.includes(4)" class="bg-pink-400 p-2 rounded-xl"
-              >Mode</span
-              >
-            </div>
+          <span :class="{
+                  'bg-blue-400': post.tags === 'politique',
+                  'bg-red-400': post.tags === 'mode',
+                  'bg-green-400': post.tags === 'tech',
+                  'bg-yellow-400': post.tags === 'sante'
+                }"
+                class="p-2 rounded-xl block ml-auto w-fit my-3">
+             {{ post.tags }}
+          </span>
         </PostCards>
+        <div v-else>
+          <p>Désoler il n'y a aucun poste à afficher !</p>
+        </div>
       </div>
     </section>
     <the-footer></the-footer>
@@ -76,6 +73,7 @@
 </template>
 <script setup lang="ts">
 const {data} = useFetch("/api/posts");
+console.log(data.value)
 const filterTag = ref();
 const filterText = ref("")
 
@@ -83,7 +81,7 @@ function searchPost(e: Event) {
   filterText.value = (e.target as HTMLInputElement).value.toLowerCase()
 }
 
-function toggleFilter(tag: number) {
+function toggleFilter(tag: string) {
   if (filterTag.value === tag) {
     filterTag.value = null;
   } else {
@@ -101,7 +99,7 @@ const postToDisplay = computed(() => {
     }
   } else if (filterTag.value) {
     if (data.value) {
-      return data.value.filter((post: { id_tags: number[]; }) => post.id_tags.includes(filterTag.value));
+      return data.value.filter((post: { tags: string; }) => post.tags.toLowerCase().includes(filterTag.value));
     }
   }
 });

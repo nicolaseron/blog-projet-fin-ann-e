@@ -7,14 +7,13 @@ export default defineEventHandler(async (event) => {
                        posts.title,
                        posts.content,
                        posts.id_profil,
+                       posts.tags, 
                        posts.created_date,
                        posts.modified_date,
                        images.img_link,
-                       intermediary_tags_posts.id_tags,
                        profil.pseudo
                 FROM posts
                          JOIN images on images.id_post = posts.id
-                         JOIN intermediary_tags_posts ON intermediary_tags_posts.id_posts = posts.id
                          JOIN profil ON profil.id = posts.id_profil
                 WHERE posts.id = ${idPost}
             `)
