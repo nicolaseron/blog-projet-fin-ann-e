@@ -2,7 +2,7 @@
   <main class="min-h-svh flex flex-col">
     <TheHeader></TheHeader>
     <section
-        class="bg-background flex justify-center items-center flex-1 text-darkBlue"
+        class="bg-background flex justify-center items-center flex-1 text-darkBlue relative"
     >
       <div
           :class="{
@@ -33,10 +33,10 @@
                   class="custom_input"
                   v-model="signInPassword"
               />
-<!--              <a href="#" class="mb-5 hover:underline">Mot de passe oublié ?</a>-->
+              <!--              <a href="#" class="mb-5 hover:underline">Mot de passe oublié ?</a>-->
               <div class="text-center">
                 <button type="submit" class="custom_btn">Me connecter</button>
-                <p v-if="signUpErrorMessage" class="text-red-500 mt-5" v-html="signUpErrorMessage"></p>
+                <p v-if="signInErrorMessage" class="text-red-500 mt-5" v-html="signInErrorMessage"></p>
               </div>
             </div>
           </form>
@@ -107,7 +107,7 @@
             </div>
           </form>
           <div class="text-center">
-            <p v-if="errorMessage" class="text-red-500" v-html="errorMessage"></p>
+            <p v-if="signUpErrorMessage" class="text-red-500" v-html="signUpErrorMessage"></p>
             <button
                 class="rotate_btn hover:underline absolute bottom-3 text-nowrap left-1/2 -translate-x-1/2"
                 @click="toggleFaceCard"
@@ -116,6 +116,10 @@
             </button>
           </div>
         </div>
+      </div>
+      <div :class="{displayErrorMessage : passwordErrorInfo}"
+           class="bg-red-500 absolute bottom-10 right-10 opacity-0 transition-opacity text-white p-5 rounded-3xl"
+           v-html="textBannerMessage">
       </div>
     </section>
     <the-footer></the-footer>
@@ -141,21 +145,77 @@ const lastName = ref("")
 const signInEmail = ref("")
 const signInPassword = ref("")
 const pseudo = ref("")
-const errorMessage = ref("")
 const signUpForm = ref(null)
 const signUpErrorMessage = ref("")
+const signInErrorMessage = ref("")
+const passwordErrorInfo = ref(false)
+const textBannerMessage = ref("")
+const validateEmail = (email: string) => {
+  return String(email)
+      .toLowerCase()
+      .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+};
+const validatePassword = (pw: string) => {
+  return /[A-Z]/.test(pw) &&
+      /[a-z]/.test(pw) &&
+      /[0-9]/.test(pw) &&
+      /[^A-Za-z0-9]/.test(pw) &&
+      pw.length > 8;
+}
+
+const validatePseudo = (pseudo: string) => {
+  const lowercaseCount = (pseudo.match(/[a-z]/g) || []).length;
+  return (pseudo.length >= 5 && !/\s/.test(pseudo) && lowercaseCount >= 3);
+}
 
 async function signUpWithFormData() {
+  if (!validateEmail(signUpEmail.value)) {
+    signUpErrorMessage.value = "L'email est invalide"
+    throw new Error("L'email est invalide")
+
+  } else if (!validatePassword(signUpPassword.value)) {
+    passwordErrorInfo.value = true
+    textBannerMessage.value = `
+        <p>"Le mot de passe est invalide."</p>
+        <p>Votre mot de passe doit contenir :</p>
+        <ul class="list-disc list-inside">
+          <li>Minimum 8 caractères</li>
+          <li>Au moins une majuscule</li>
+          <li>Au moins une minuscule</li>
+          <li>Au moins un chiffre</li>
+          <li>Au moins un caractère spécial</li>
+        </ul>`
+    setTimeout(() => {
+      passwordErrorInfo.value = false
+    }, 6000)
+    throw new Error("Le mot de passe est invalide")
+  } else if (!validatePseudo(pseudo.value)) {
+    passwordErrorInfo.value = true
+    textBannerMessage.value = `
+        <p>Le pseudo est invalide.</p>
+        <p>Le pseudo doit contenir :</p>
+        <ul class="list-disc list-inside">
+          <li>Minimum 5 caractères</li>
+          <li>Ne doit pas contenir d'espaces</li>
+          <li>Au moins trois minuscule</li>
+        </ul>`
+    setTimeout(() => {
+      passwordErrorInfo.value = true
+    }, 6000)
+    throw new Error("Le pseudo est invalide")
+  }
   const dataForm = new FormData(signUpForm.value);
   const response = await fetch("api/auth/register", {
     method: "POST",
     body: dataForm
   })
   if (!response.ok) {
-    if (response.statusText === "emailExist")
-      errorMessage.value = `Cette adresse mail est déjà utilisée. <br> Connectez-vous !`
-    else if (response.statusText === "pseudoExist") {
-      errorMessage.value = `Ce pseudo est déjà utilisé, <br> chosissez-en un autre !`
+    if (response.statusText === "emailExist") {
+      signUpErrorMessage.value = `Cette adresse mail est déjà utilisée. <br> Connectez-vous !`
+    } else if (response.statusText === "pseudoExist") {
+      signUpErrorMessage.value = `Ce pseudo est déjà utilisé, <br> chosissez-en un autre !`
     }
   } else {
     await navigateTo("/confirmSignUp")
@@ -170,7 +230,7 @@ async function signInWithCredentials() {
   try {
     await signIn(credentials, {callbackUrl: "/confirmConnexion"})
   } catch (err) {
-    signUpErrorMessage.value = "E-mail ou mot de passs incorrect"
+    signInErrorMessage.value = "E-mail ou mot de passs incorrect"
   }
 }
 
@@ -199,5 +259,10 @@ function toggleFaceCard() {
   @apply absolute h-full w-full;
   backface-visibility: hidden;
   transform: rotateY(-180deg);
+}
+
+.displayErrorMessage {
+  opacity: 1;
+  transition: opacity 2s ease;
 }
 </style>
