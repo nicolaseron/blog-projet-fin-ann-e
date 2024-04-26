@@ -58,7 +58,7 @@
                   'bg-green-400': post.tags === 'tech',
                   'bg-yellow-400': post.tags === 'sante'
                 }"
-                class="p-2 rounded-xl block ml-auto w-fit my-3">
+                class="p-2 rounded-xl block ml-auto w-fit">
              {{ post.tags }}
           </span>
         </PostCards>
