@@ -73,10 +73,10 @@
 <script setup lang="ts">
 const {data} = useFetch("/api/posts");
 const filterTag = ref();
-const filterText = ref("")
+const filterText = ref("");
 
 function searchPost(e: Event) {
-  filterText.value = (e.target as HTMLInputElement).value.toLowerCase()
+  filterText.value = (e.target as HTMLInputElement).value.toLowerCase();
 }
 
 function toggleFilter(tag: string) {
@@ -89,11 +89,11 @@ function toggleFilter(tag: string) {
 
 const postToDisplay = computed(() => {
   if (!filterText.value.length && !filterTag.value) {
-    return data.value
+    return data.value;
   } else if (filterText.value) {
     filterTag.value = null;
     if (data.value) {
-      return data.value.filter((post: { title: string }) => post.title.toLowerCase().includes(filterText.value))
+      return data.value.filter((post: { title: string }) => post.title.toLowerCase().includes(filterText.value));
     }
   } else if (filterTag.value) {
     if (data.value) {

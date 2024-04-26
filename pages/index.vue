@@ -53,7 +53,8 @@ onMounted(() => {
   right: 0;
   animation: cursor 1s infinite;
 }
-.hide-cursor::after{
+
+.hide-cursor::after {
   display: none;
 }
 

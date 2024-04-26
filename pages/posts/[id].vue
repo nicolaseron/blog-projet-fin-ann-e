@@ -2,7 +2,7 @@
   <main class="flex flex-col min-h-svh text-darkBlue">
     <the-header></the-header>
     <section v-if="data">
-      <pre>{{data}}</pre>
+      <pre>{{ data }}</pre>
     </section>
     <the-footer></the-footer>
   </main>

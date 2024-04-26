@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
             Body: data.imgData,
             Region: process.env.AWS_REGION,
             ContentType: data.imgType
-        }
+        };
         await s3Client.send(
             new PutObjectCommand({
                 Bucket: params.Bucket,
@@ -50,10 +50,8 @@ export default defineEventHandler(async (event) => {
                 ContentType: params.ContentType,
             })
         );
-        const url = `https://${params.Bucket}.s3.${params.Region}.amazonaws.com/${params.Key}`
-
+        const url = `https://${params.Bucket}.s3.${params.Region}.amazonaws.com/${params.Key}`;
         const insertImage = "INSERT INTO images (id_post, img_link) VALUES ($1, $2)";
-
         await client.query(insertImage, [idPost, url]);
     } catch (err) {
         console.error("Erreur lors de l'éxécution de la requête", err);
