@@ -9,16 +9,16 @@ export default defineEventHandler(async event => {
     const userPseudo = response.get('pseudo');
 
     const searchMailIntoDB = await client.query('SELECT mail FROM profil WHERE mail = $1', [userEmail]);
-    const isEmailExist = searchMailIntoDB.rows[0];
+    const email = searchMailIntoDB.rows[0];
     const searchPseudoIntoDB = await client.query('SELECT pseudo FROM profil WHERE pseudo = $1', [userPseudo]);
-    const isPseudoExist = searchPseudoIntoDB.rows[0];
+    const pseudo = searchPseudoIntoDB.rows[0];
 
-    if (isEmailExist) {
+    if (email) {
         throw createError({
             statusCode: 401,
             statusMessage: "emailExist"
         });
-    } else if (isPseudoExist) {
+    } else if (pseudo) {
         throw createError({
             statusCode: 401,
             statusMessage: "pseudoExist"
