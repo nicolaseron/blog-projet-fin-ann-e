@@ -133,23 +133,21 @@ definePageMeta({
     navigateAuthenticatedTo: '/allPosts',
   },
 })
-const error = useError()
-const {signIn, status, token} = useAuth()
+const error = useError();
+const {signIn, status, token} = useAuth();
 
-console.log(status.value)
-
-const signUpEmail = ref("")
-const signUpPassword = ref("")
-const firstName = ref("")
-const lastName = ref("")
-const signInEmail = ref("")
-const signInPassword = ref("")
-const pseudo = ref("")
-const signUpForm = ref(null)
-const signUpErrorMessage = ref("")
-const signInErrorMessage = ref("")
-const passwordErrorInfo = ref(false)
-const textBannerMessage = ref("")
+const signUpEmail = ref("");
+const signUpPassword = ref("");
+const firstName = ref("");
+const lastName = ref("");
+const signInEmail = ref("");
+const signInPassword = ref("");
+const pseudo = ref("");
+const signUpForm = ref(null);
+const signUpErrorMessage = ref("");
+const signInErrorMessage = ref("");
+const passwordErrorInfo = ref(false);
+const textBannerMessage = ref("");
 const validateEmail = (email: string) => {
   return String(email)
       .toLowerCase()
@@ -163,20 +161,20 @@ const validatePassword = (pw: string) => {
       /[0-9]/.test(pw) &&
       /[^A-Za-z0-9]/.test(pw) &&
       pw.length > 8;
-}
+};
 
 const validatePseudo = (pseudo: string) => {
   const lowercaseCount = (pseudo.match(/[a-z]/g) || []).length;
   return (pseudo.length >= 5 && !/\s/.test(pseudo) && lowercaseCount >= 3);
-}
+};
 
 async function signUpWithFormData() {
   if (!validateEmail(signUpEmail.value)) {
-    signUpErrorMessage.value = "L'email est invalide"
-    throw new Error("L'email est invalide")
+    signUpErrorMessage.value = "L'email est invalide";
+    throw new Error("L'email est invalide");
 
   } else if (!validatePassword(signUpPassword.value)) {
-    passwordErrorInfo.value = true
+    passwordErrorInfo.value = true;
     textBannerMessage.value = `
         <p>"Le mot de passe est invalide."</p>
         <p>Votre mot de passe doit contenir :</p>
@@ -186,13 +184,13 @@ async function signUpWithFormData() {
           <li>Au moins une minuscule</li>
           <li>Au moins un chiffre</li>
           <li>Au moins un caractère spécial</li>
-        </ul>`
+        </ul>`;
     setTimeout(() => {
-      passwordErrorInfo.value = false
+      passwordErrorInfo.value = false;
     }, 6000)
-    throw new Error("Le mot de passe est invalide")
+    throw new Error("Le mot de passe est invalide");
   } else if (!validatePseudo(pseudo.value)) {
-    passwordErrorInfo.value = true
+    passwordErrorInfo.value = true;
     textBannerMessage.value = `
         <p>Le pseudo est invalide.</p>
         <p>Le pseudo doit contenir :</p>
@@ -200,25 +198,25 @@ async function signUpWithFormData() {
           <li>Minimum 5 caractères</li>
           <li>Ne doit pas contenir d'espaces</li>
           <li>Au moins trois minuscule</li>
-        </ul>`
+        </ul>`;
     setTimeout(() => {
-      passwordErrorInfo.value = true
+      passwordErrorInfo.value = true;
     }, 6000)
-    throw new Error("Le pseudo est invalide")
+    throw new Error("Le pseudo est invalide");
   }
   const dataForm = new FormData(signUpForm.value);
   const response = await fetch("api/auth/register", {
     method: "POST",
     body: dataForm
-  })
+  });
   if (!response.ok) {
     if (response.statusText === "emailExist") {
-      signUpErrorMessage.value = `Cette adresse mail est déjà utilisée. <br> Connectez-vous !`
+      signUpErrorMessage.value = `Cette adresse mail est déjà utilisée. <br> Connectez-vous !`;
     } else if (response.statusText === "pseudoExist") {
-      signUpErrorMessage.value = `Ce pseudo est déjà utilisé, <br> chosissez-en un autre !`
+      signUpErrorMessage.value = `Ce pseudo est déjà utilisé, <br> chosissez-en un autre !`;
     }
   } else {
-    await navigateTo("/confirmSignUp")
+    await navigateTo("/confirmSignUp");
   }
 }
 
@@ -226,11 +224,11 @@ async function signInWithCredentials() {
   const credentials = {
     email: signInEmail.value,
     password: signInPassword.value,
-  }
+  };
   try {
-    await signIn(credentials, {callbackUrl: "/confirmConnexion"})
+    await signIn(credentials, {callbackUrl: "/confirmConnexion"});
   } catch (err) {
-    signInErrorMessage.value = "E-mail ou mot de passs incorrect"
+    signInErrorMessage.value = "E-mail ou mot de passs incorrect";
   }
 }
 

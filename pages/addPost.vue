@@ -138,16 +138,16 @@
   </main>
 </template>
 <script setup>
-definePageMeta({middleware: 'auth'})
+definePageMeta({middleware: 'auth'});
 
-const {data} = useAuth()
+const {data} = useAuth();
 
-const idProfil = data.value.response.id
+const idProfil = data.value.response.id;
 const title = ref("");
 const content = ref("");
 const previewImage = ref(null);
 const myForm = ref(null);
-const tagValue = ref("")
+const tagValue = ref("");
 const tagClass = computed(() => {
   return {
     'bg-blue-400': tagValue.value === 'autre',
@@ -156,8 +156,8 @@ const tagClass = computed(() => {
     'bg-yellow-400': tagValue.value === 'politique',
     'bg-purple-400': tagValue.value === 'mode'
   }
-})
-const succesPostSend = ref(false)
+});
+const succesPostSend = ref(false);
 
 function addPreviewImg(e) {
   const file = e.target.files[0];
@@ -172,25 +172,26 @@ function addPreviewImg(e) {
     reader.readAsDataURL(file);
   }
 }
+
 function resetForm() {
   myForm.value.reset()
-  title.value=""
-  content.value=""
-  tagValue.value=""
-  previewImage.value.src =""
+  title.value = ""
+  content.value = ""
+  tagValue.value = ""
+  previewImage.value.src = ""
 }
 
 async function sendPost() {
   const dataForm = new FormData(myForm.value);
   try {
-    dataForm.set("idProfil", idProfil)
+    dataForm.set("idProfil", idProfil);
     const response = await fetch("/api/form", {
       method: "POST",
       body: dataForm,
     });
     if (response.ok) {
-      succesPostSend.value = true
-      resetForm()
+      succesPostSend.value = true;
+      resetForm();
     } else {
       console.error("Error sending post");
     }

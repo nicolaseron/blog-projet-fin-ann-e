@@ -12,7 +12,7 @@ export default defineEventHandler(async () => {
         `);
         return result.rows;
     } catch (err) {
-        console.log("Erreur lors de l'éxécution de la requête post.get" , err);
+        console.log("Erreur lors de l'éxécution de la requête post.get", err);
         throw new Error('Error executing query');
     }
 });

@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-    const idPost = getRouterParam(event, 'id')
+    const idPost = getRouterParam(event, 'id');
     const selectPost =
         await client.query(
             `
@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
                        posts.title,
                        posts.content,
                        posts.id_profil,
-                       posts.tags, 
+                       posts.tags,
                        posts.created_date,
                        posts.modified_date,
                        images.img_link,
@@ -16,6 +16,6 @@ export default defineEventHandler(async (event) => {
                          JOIN images on images.id_post = posts.id
                          JOIN profil ON profil.id = posts.id_profil
                 WHERE posts.id = ${idPost}
-            `)
-    return selectPost.rows[0]
+            `);
+    return selectPost.rows[0];
 })
