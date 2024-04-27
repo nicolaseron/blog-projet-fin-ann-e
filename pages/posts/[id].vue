@@ -1,10 +1,11 @@
 <template>
   <section v-if="data" class="px-5 md:px-20 m-auto">
       <span :class="{
-                  'bg-blue-400': data.tags === 'politique',
-                  'bg-red-400': data.tags === 'mode',
-                  'bg-green-400': data.tags === 'tech',
-                  'bg-yellow-400': data.tags === 'sante'
+          'bg-blue-400': data.tags === 'autre',
+          'bg-green-400': data.tags === 'tech',
+          'bg-red-400': data.tags === 'sante',
+          'bg-yellow-400': data.tags === 'politique',
+          'bg-purple-400': data.tags === 'mode'
                 }"
             class="p-2 rounded-xl block ml-auto mt-5 w-fit">
              {{ data.tags }}

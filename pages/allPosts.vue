@@ -50,11 +50,12 @@
           :to="`/posts/${post.id}`"
       >
           <span :class="{
-                  'bg-blue-400': post.tags === 'politique',
-                  'bg-red-400': post.tags === 'mode',
-                  'bg-green-400': post.tags === 'tech',
-                  'bg-yellow-400': post.tags === 'sante'
-                }"
+            'bg-blue-400': post.tags === 'autre',
+            'bg-green-400': post.tags === 'tech',
+            'bg-red-400': post.tags === 'sante',
+            'bg-yellow-400': post.tags === 'politique',
+            'bg-purple-400': post.tags === 'mode'
+                        }"
                 class="p-2 rounded-xl block ml-auto w-fit">
              {{ post.tags }}
           </span>
