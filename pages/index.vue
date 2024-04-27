@@ -1,25 +1,21 @@
 <template>
-  <div class="flex flex-col min-h-svh">
-    <the-header></the-header>
-    <main class="relative flex-1 h-full w-full">
-      <video
-          src="/video/184427 (1080p).mp4"
-          class="absolute top-0 left-0 w-full h-full pointer-events-none object-cover"
-          preload="auto"
-          muted
-          playsinline
-          loop
-          autoplay
-      ></video>
-      <h1
-          id="title"
-          ref="title"
-          class="absolute top-5 left-5 text-3xl text-white sm:px-5"
-          :class="{'hide-cursor' : !isCursorVisible}"
-      ></h1>
-    </main>
-    <the-footer></the-footer>
-  </div>
+  <section>
+    <video
+        src="/video/184427 (1080p).mp4"
+        class="absolute top-0 left-0 w-full h-full pointer-events-none object-cover"
+        preload="auto"
+        muted
+        playsinline
+        loop
+        autoplay
+    ></video>
+    <h1
+        id="title"
+        ref="title"
+        class="absolute top-5 left-5 text-3xl text-white sm:px-5"
+        :class="{'hide-cursor' : !isCursorVisible}"
+    ></h1>
+  </section>
 </template>
 
 <script setup>

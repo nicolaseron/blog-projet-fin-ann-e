@@ -1,57 +1,54 @@
 <template>
-  <main class="flex flex-col min-h-svh text-darkBlue">
-    <the-header></the-header>
-    <section class="bg-background p-12 text-darkBlue flex-1">
-      <div class="flex flex-col items-center justify-between md:flex-row">
-        <nuxt-link to="addPost" class="custom_btn w-fit order-1 md:order-2"
-        >Ajouter vos propes postes
-        </nuxt-link
-        >
-        <div class="flex flex-col gap-5 my-5 order-2 md:order-1">
-          <div class="flex flex-col gap-3 md:flex-row md:w-full">
-            <p class="text-nowrap">Recherchr par titre de poste : </p>
-            <input
-                type="search"
-                name="searchPost"
-                id="searchPost"
-                class="custom_input md:w-full"
-                placeholder="Ex : Javascript"
-                @input="searchPost"
-            />
-          </div>
-          <div class="flex flex-col gap-3 items-center md:flex-row">
-            <p>Rechercher par tags :</p>
-            <div class="flex gap-x-3">
-              <button @click="toggleFilter('tech')" class="custom_btn"
-                      :class="{ 'focusBtn': filterTag === 'tech' && !filterText.length }">Tech
-              </button>
-              <button @click="toggleFilter('sante')" class="custom_btn"
-                      :class="{ 'focusBtn': filterTag === 'sante' && !filterText.length }">Santé
-              </button>
-              <button @click="toggleFilter('politique')" class="custom_btn"
-                      :class="{ 'focusBtn': filterTag === 'politique' && !filterText.length }">Politique
-              </button>
-              <button @click="toggleFilter('mode')" class="custom_btn"
-                      :class="{ 'focusBtn': filterTag === 'mode' && !filterText.length }">Mode
-              </button>
-            </div>
+  <section class="p-12 text-darkBlue w-full">
+    <div class="flex flex-col items-center justify-between md:flex-row">
+      <nuxt-link to="addPost" class="custom_btn w-fit order-1 md:order-2"
+      >Ajouter vos propes postes
+      </nuxt-link
+      >
+      <div class="flex flex-col gap-5 my-5 order-2 md:order-1">
+        <div class="flex flex-col gap-3 md:flex-row md:w-full">
+          <p class="text-nowrap">Recherchr par titre de poste : </p>
+          <input
+              type="search"
+              name="searchPost"
+              id="searchPost"
+              class="custom_input md:w-full"
+              @input="searchPost"
+          />
+        </div>
+        <div class="flex flex-col gap-3 items-center md:flex-row">
+          <p>Rechercher par tags :</p>
+          <div class="flex gap-x-3">
+            <button @click="toggleFilter('tech')" class="custom_btn"
+                    :class="{ 'focusBtn': filterTag === 'tech' && !filterText.length }">Tech
+            </button>
+            <button @click="toggleFilter('sante')" class="custom_btn"
+                    :class="{ 'focusBtn': filterTag === 'sante' && !filterText.length }">Santé
+            </button>
+            <button @click="toggleFilter('politique')" class="custom_btn"
+                    :class="{ 'focusBtn': filterTag === 'politique' && !filterText.length }">Politique
+            </button>
+            <button @click="toggleFilter('mode')" class="custom_btn"
+                    :class="{ 'focusBtn': filterTag === 'mode' && !filterText.length }">Mode
+            </button>
           </div>
         </div>
       </div>
-      <h1
-          class="text-2xl font-bold mb-10 border-b inline-block border-darkBlue"
+    </div>
+    <h1
+        class="text-2xl font-bold mb-10 border-b inline-block border-darkBlue"
+    >
+      Fil d'actualité :
+    </h1>
+    <div class="flex gap-10 flex-wrap justify-center">
+      <PostCards
+          v-for="(post,i) in postToDisplay || []"
+          :key="post.id"
+          :title="post.title"
+          :content="post.content"
+          :src="post.img_link"
+          :to="`/posts/${post.id}`"
       >
-        Fil d'actualité :
-      </h1>
-      <div class="flex gap-10 flex-wrap justify-center">
-        <PostCards
-            v-for="(post,i) in postToDisplay || []"
-            :key="post.id"
-            :title="post.title"
-            :content="post.content"
-            :src="post.img_link"
-            :to="`/posts/${post.id}`"
-        >
           <span :class="{
                   'bg-blue-400': post.tags === 'politique',
                   'bg-red-400': post.tags === 'mode',
@@ -61,14 +58,12 @@
                 class="p-2 rounded-xl block ml-auto w-fit">
              {{ post.tags }}
           </span>
-        </PostCards>
-        <div v-if="!postToDisplay || postToDisplay.length === 0">
-          <p>Désoler il n'y a aucun poste à afficher !</p>
-        </div>
+      </PostCards>
+      <div v-if="!postToDisplay || postToDisplay.length === 0">
+        <p>Désoler il n'y a aucun poste à afficher !</p>
       </div>
-    </section>
-    <the-footer></the-footer>
-  </main>
+    </div>
+  </section>
 </template>
 <script setup lang="ts">
 const {data} = useFetch("/api/posts");
@@ -105,7 +100,7 @@ const postToDisplay = computed(() => {
 
 <style scoped>
 .focusBtn {
-  box-shadow: inset 0 -3em 0 0 #374158;
+  box-shadow: inset 0 -3em 0 0 #112D4E;
   color: white;
 }
 </style>
