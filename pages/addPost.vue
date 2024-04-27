@@ -1,141 +1,135 @@
 <template>
-  <main class="flex flex-col min-h-svh text-darkBlue relative">
-    <the-header></the-header>
-    <section class="bg-background flex-1 flex p-10 flex-col lg:flex-row">
-      <form @submit.prevent="sendPost" class="flex-1" ref="myForm">
-        <div class="flex flex-col gap-y-5">
-          <div class="flex flex-col gap-y-3">
-            <label for="image"
-            >Choisissez une image
-              <span class="text-xs text-gray-500"
-              >(format accepté : '.png','.jpg','.jpeg','.webp')</span
-              >
-              :
-            </label>
-            <input
-                type="file"
-                name="image"
-                id="image"
-                accept=".png,.jpg,.jpeg,.webp"
-                @change="addPreviewImg"
-                required
-                ref="img"
-            />
-          </div>
-          <div>
-            <label for="title" class="mr-2">Titre du poste : </label>
-            <input
-                v-model="title"
-                type="text"
-                name="title"
-                id="title"
-                required
-                class="custom_input"
-            />
-          </div>
-          <div class="flex gap-x-3">
-            <label for="content">Contenu du poste&nbsp;:</label>
-            <textarea
-                class="bg-transparent border border-darkBlue"
-                name="content"
-                id="content"
-                v-model="content"
-                spellcheck="true"
-                required
-                cols="60"
-                rows="10"
-            ></textarea>
-          </div>
-          <div class="flex flex-col lg:flex-row">
-            <p class="inline-block mr-3">Tags :</p>
-            <div class="gap-x-3 flex">
-              <div>
-                <input
-                    type="radio"
-                    name="tags"
-                    id="tech"
-                    value="tech"
-                    v-model="tagValue"
-                    required
-                />
-                <label for="tech" class="ml-1">Tech</label>
-              </div>
-              <div>
-                <input
-                    type="radio"
-                    name="tags"
-                    id="sante"
-                    value="sante"
-                    v-model="tagValue"
-                />
-                <label for="sante" class="ml-1">Santé</label>
-              </div>
-              <div>
-                <input
-                    type="radio"
-                    name="tags"
-                    id="politique"
-                    value="politique"
-                    v-model="tagValue"
-                />
-                <label for="politique" class="ml-1">Politique</label>
-              </div>
-              <div>
-                <input
-                    type="radio"
-                    name="tags"
-                    id="mode"
-                    value="mode"
-                    v-model="tagValue"
-                />
-                <label for="mode" class="ml-1">Mode</label>
-              </div>
-              <div>
-                <input
-                    type="radio"
-                    name="tags"
-                    id="autre"
-                    value="autre"
-                    v-model="tagValue"
-                />
-                <label for="autre" class="ml-1">Autre</label>
-              </div>
+  <section class="flex-1 flex p-10 flex-col lg:flex-row">
+    <form @submit.prevent="sendPost" class="flex-1" ref="myForm">
+      <div class="flex flex-col gap-y-5">
+        <div class="flex flex-col gap-y-3">
+          <label for="image"
+          >Choisissez une image
+            <span class="text-xs italic">(format accepté : '.png','.jpg','.jpeg','.webp')</span>
+            :
+          </label>
+          <input
+              type="file"
+              name="image"
+              id="image"
+              accept=".png,.jpg,.jpeg,.webp"
+              @change="addPreviewImg"
+              required
+              ref="img"
+          />
+        </div>
+        <div>
+          <label for="title" class="mr-2">Titre du poste : </label>
+          <input
+              v-model="title"
+              type="text"
+              name="title"
+              id="title"
+              required
+              class="custom_input"
+          />
+        </div>
+        <div class="flex gap-x-3">
+          <label for="content">Contenu du poste&nbsp;:</label>
+          <textarea
+              class="bg-transparent border border-darkBlue"
+              name="content"
+              id="content"
+              v-model="content"
+              spellcheck="true"
+              required
+              cols="60"
+              rows="10"
+          ></textarea>
+        </div>
+        <div class="flex flex-col lg:flex-row">
+          <p class="inline-block mr-3">Tags :</p>
+          <div class="gap-x-3 flex">
+            <div>
+              <input
+                  type="radio"
+                  name="tags"
+                  id="tech"
+                  value="tech"
+                  v-model="tagValue"
+                  required
+              />
+              <label for="tech" class="ml-1">Tech</label>
+            </div>
+            <div>
+              <input
+                  type="radio"
+                  name="tags"
+                  id="sante"
+                  value="sante"
+                  v-model="tagValue"
+              />
+              <label for="sante" class="ml-1">Santé</label>
+            </div>
+            <div>
+              <input
+                  type="radio"
+                  name="tags"
+                  id="politique"
+                  value="politique"
+                  v-model="tagValue"
+              />
+              <label for="politique" class="ml-1">Politique</label>
+            </div>
+            <div>
+              <input
+                  type="radio"
+                  name="tags"
+                  id="mode"
+                  value="mode"
+                  v-model="tagValue"
+              />
+              <label for="mode" class="ml-1">Mode</label>
+            </div>
+            <div>
+              <input
+                  type="radio"
+                  name="tags"
+                  id="autre"
+                  value="autre"
+                  v-model="tagValue"
+              />
+              <label for="autre" class="ml-1">Autre</label>
             </div>
           </div>
-          <button
-              type="submit"
-              class="custom_btn w-fit self-center mb-5 lg:mb-0"
-          >
-            Ajouter le poste
-          </button>
         </div>
-      </form>
-      <div class="flex-1 lg:ml-5">
-        <h1 class="text-2xl">Rendu sur la page :</h1>
-        <div
-            class="border border-darkBlue max-w-[700px] h-auto min-h-[90%] mt-5 px-5 lg:px-10 break-words "
+        <button
+            type="submit"
+            class="custom_btn w-fit self-center mb-5 lg:mb-0"
         >
+          Ajouter le poste
+        </button>
+      </div>
+    </form>
+    <div class="flex-1 lg:ml-5">
+      <h1 class="text-2xl">Rendu sur la page :</h1>
+      <div
+          class="border border-darkBlue max-w-[700px] h-auto min-h-[90%] mt-5 px-5 lg:px-10 break-words "
+      >
             <span v-show="tagValue" :class="tagClass" class="p-2 rounded-xl inline-block float-right my-3">
               {{ tagValue }}
             </span>
-          <img
-              ref="previewImage"
-              class="max-h-[200px] w-full object-contain my-5"
-          />
-          <h2 class="text-xl font-bold mb-8">{{ title }}</h2>
-          <p class="whitespace-pre-line">{{ content }}</p>
-        </div>
+        <img
+            ref="previewImage"
+            class="max-h-[200px] w-full object-contain my-5"
+        />
+        <h2 class="text-xl font-bold mb-8 text-center">{{ title }}</h2>
+        <p class="whitespace-pre-line">{{ content }}</p>
       </div>
-    </section>
-    <the-footer></the-footer>
-    <div class="absolute bottom-16 right-10 bg-green-500 text-center rounded-3xl p-5 opacity-0"
-         :class="{active : succesPostSend}">
-      <h2>Votre article est bien ajouté ! &#x1F389;</h2>
-      <p>Vous pouvez le consultez depuis la page
-        <nuxt-link to="/allPosts" class="underline text-blue-600">des postes</nuxt-link>
-      </p>
     </div>
-  </main>
+  </section>
+  <div class="absolute bottom-16 right-10 bg-green-500 text-center rounded-3xl p-5 opacity-0"
+       :class="{active : succesPostSend}">
+    <h2>Votre article est bien ajouté ! &#x1F389;</h2>
+    <p>Vous pouvez le consultez depuis la page
+      <nuxt-link to="/allPosts" class="underline text-blue-600">des postes</nuxt-link>
+    </p>
+  </div>
 </template>
 <script setup>
 definePageMeta({middleware: 'auth'});

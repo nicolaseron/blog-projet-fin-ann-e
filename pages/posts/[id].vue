@@ -1,7 +1,5 @@
 <template>
-  <main class="flex flex-col min-h-svh text-darkBlue max-w-[2500px]">
-    <the-header></the-header>
-    <section v-if="data" class="px-5 md:px-20">
+  <section v-if="data" class="px-5 md:px-20 m-auto">
       <span :class="{
                   'bg-blue-400': data.tags === 'politique',
                   'bg-red-400': data.tags === 'mode',
@@ -11,15 +9,13 @@
             class="p-2 rounded-xl block ml-auto mt-5 w-fit">
              {{ data.tags }}
       </span>
-      <nuxt-picture :src="data.img_link"
-                    :img-attrs="{class: 'w-full h-full object-cover max-w-[80%] mx-auto my-10 rounded-xl md:max-w-[700px]'}">
-      </nuxt-picture>
-      <h1 class="text-center text-4xl">{{ data.title }}</h1>
-      <p class="text-right my-14 italic text-sm">Crée le {{ formatDate }} par {{ data.pseudo }}</p>
-      <p v-text="data.content" class="mb-10 max-w-[1500px] m-auto"></p>
-    </section>
-    <the-footer></the-footer>
-  </main>
+    <nuxt-picture :src="data.img_link"
+                  :img-attrs="{class: 'w-full h-auto object-cover max-w-[80%] mx-auto my-8 rounded-xl md:max-w-[700px]'}">
+    </nuxt-picture>
+    <h1 class="text-center text-4xl">{{ data.title }}</h1>
+    <p class="text-right my-14 italic text-sm">Crée le {{ formatDate }} par {{ data.pseudo }}</p>
+    <p v-text="data.content" class="mb-10 max-w-[1500px] m-auto"></p>
+  </section>
 </template>
 
 <script setup lang="ts">

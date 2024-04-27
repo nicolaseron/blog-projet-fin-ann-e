@@ -16,6 +16,7 @@ export const connectToDatabase = async () => {
         try {
             await client.connect();
             isConnected = !isConnected;
+            console.log("connécté içi ?");
         } catch (err) {
             console.log("Error connecting to the database", err);
         }
@@ -24,10 +25,11 @@ export const connectToDatabase = async () => {
 const reconnectToDb = async () => {
     dbClient = null;
     dbClient = await connectToDatabase();
+    console.log('reconnect to db ici')
 };
-client.on('error', err => {
+client.on('error', async err => {
     console.log("postgres error try to reconnect")
-    reconnectToDb()
+    await reconnectToDb()
 });
 
 export const disconnectFromDatabase = async () => {

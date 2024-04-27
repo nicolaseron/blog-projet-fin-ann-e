@@ -16,11 +16,11 @@
       </nuxtLink
       >
     </div>
-    <div class="flex gap-x-5 my-2 flex-auto justify-between">
+    <div class="flex gap-x-5 my-2 flex-auto justify-between items-center">
       <NuxtLink to="/allPosts" class="custom_btn"> Les postes</NuxtLink>
-      <div v-if="isLoggedIn">
-        <nuxt-link to="/profil" class="custom_btn">profil</nuxt-link>
-        <button @click="handleSignOut">Déconnexion</button>
+      <div v-if="isLoggedIn" class="flex gap-x-5">
+        <nuxt-link to="/profil" class="custom_btn">{{data.response.firstName}} <i class="icon icon-user"></i></nuxt-link>
+        <button @click="handleSignOut" class="custom_btn">Déconnexion</button>
       </div>
       <NuxtLink v-else to="/connexion" class="custom_btn">
         Connexion / Inscription
@@ -32,9 +32,6 @@
 
 const {signOut, status, data, getSession} = useAuth();
 const isLoggedIn = computed(() => status.value === "authenticated")
-if (isLoggedIn.value) {
-  console.log(status.value)
-}
 
 async function handleSignOut() {
   await signOut({callbackUrl: "/"});
