@@ -1,7 +1,6 @@
 import pg from "pg";
 
 const config = useRuntimeConfig();
-let dbClient;
 export const client = new pg.Client({
     connectionString: config.dbUrl,
     ssl: {
@@ -16,27 +15,22 @@ export const connectToDatabase = async () => {
         try {
             await client.connect();
             isConnected = !isConnected;
-            console.log("connécté içi ?");
         } catch (err) {
             console.log("Error connecting to the database", err);
         }
     }
 };
-const reconnectToDb = async () => {
-    dbClient = null;
-    dbClient = await connectToDatabase();
-    console.log('reconnect to db ici')
-};
 client.on('error', async err => {
     console.log("postgres error try to reconnect")
-    await reconnectToDb()
+    isConnected = false;
+    await connectToDatabase()
 });
 
 export const disconnectFromDatabase = async () => {
     if (isConnected) {
         try {
             await client.end();
-            isConnected = !isConnected;
+            isConnected = false
         } catch (err) {
             console.log("Error disconnecting from the database", err);
         }

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
 
 const refreshTokens: Record<number, Record<string, any>> = {}
-export const SECRET = 'dummy'
+export const SECRET = 'fsuhviuuzihtaivinviuifnccuih46461s4g1s94vs9g'
 export default defineEventHandler(async event => {
     const response = await readBody(event);
     const selectProfil = await client.query(`SELECT password, id

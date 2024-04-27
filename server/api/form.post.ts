@@ -2,6 +2,7 @@ import {
     S3Client,
     PutObjectCommand,
 } from "@aws-sdk/client-s3";
+import jwt from "jsonwebtoken";
 
 export default defineEventHandler(async (event) => {
 
@@ -18,6 +19,20 @@ export default defineEventHandler(async (event) => {
 
     try {
         const body = await readMultipartFormData(event)
+        const token = event.headers.get('Authorization')
+        if (!token) {
+            throw createError({
+                statusCode: 401,
+                message: "Le Token n'est pas présent !"
+            });
+        }
+        const decodedToken = jwt.verify(token.split(' ')[1], 'fsuhviuuzihtaivinviuifnccuih46461s4g1s94vs9g');
+        if (!decodedToken) {
+            throw createError({
+                statusCode: 401,
+                message:"Le Token est invalide !"
+            })
+        }
         const data: MyData = {}
         if (body) {
             data.imgType = body[0].type

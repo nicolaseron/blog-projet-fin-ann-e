@@ -179,9 +179,13 @@ async function sendPost() {
   const dataForm = new FormData(myForm.value);
   try {
     dataForm.set("idProfil", idProfil);
+    const token = document.cookie.split('; ').find(row => row.startsWith('auth.token=')).split('=')[1];
     const response = await fetch("/api/form", {
       method: "POST",
       body: dataForm,
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     });
     if (response.ok) {
       succesPostSend.value = true;
