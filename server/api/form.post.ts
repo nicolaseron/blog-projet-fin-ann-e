@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
     const s3Client = new S3Client({});
 
-    interface MyData {
+    interface Data {
         imgType?: string;
         imgData?: string | Buffer;
         title?: string;
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
                 message:"Le Token est invalide !"
             })
         }
-        const data: MyData = {}
+        const data: Data = {}
         if (body) {
             data.imgType = body[0].type
             data.imgData = body[0].data
