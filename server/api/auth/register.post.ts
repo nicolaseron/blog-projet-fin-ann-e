@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import {pool} from "~/server/utils/db-client";
 
 export default defineEventHandler(async event => {
     const response = await readFormData(event);
@@ -8,9 +9,9 @@ export default defineEventHandler(async event => {
     const userLastName = response.get('lastName');
     const userPseudo = response.get('pseudo');
 
-    const searchMailIntoDB = await client.query('SELECT mail FROM profil WHERE mail = $1', [userEmail]);
+    const searchMailIntoDB = await pool.query('SELECT mail FROM profil WHERE mail = $1', [userEmail]);
     const email:string = searchMailIntoDB.rows[0];
-    const searchPseudoIntoDB = await client.query('SELECT pseudo FROM profil WHERE pseudo = $1', [userPseudo]);
+    const searchPseudoIntoDB = await pool.query('SELECT pseudo FROM profil WHERE pseudo = $1', [userPseudo]);
     const pseudo:string = searchPseudoIntoDB.rows[0];
 
     if (email) {
@@ -35,7 +36,7 @@ export default defineEventHandler(async event => {
                 } else {
                     try {
                         const insertProfil = "INSERT INTO profil (first_name, last_name, mail, password, pseudo) VALUES ($1, $2, $3, $4, $5)";
-                        await client.query(insertProfil, [userFirstName, userLastName, userEmail, hash, userPseudo]);
+                        await pool.query(insertProfil, [userFirstName, userLastName, userEmail, hash, userPseudo]);
                     } catch (error) {
                         throw createError({
                             statusCode: 500,

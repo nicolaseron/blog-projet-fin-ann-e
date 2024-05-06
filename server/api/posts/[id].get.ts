@@ -1,11 +1,12 @@
 import {Post} from '../models/Post'
 import {QueryResult} from "pg";
+import {pool} from "~/server/utils/db-client";
 
 export default defineEventHandler(async (event) => {
     try {
         const idPost = getRouterParam(event, 'id');
         const selectPost: QueryResult<Post> =
-            await client.query(
+            await pool.query(
                 `
                     SELECT posts.id,
                            posts.title,

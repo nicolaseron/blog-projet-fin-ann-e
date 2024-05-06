@@ -1,7 +1,7 @@
 export default defineNitroPlugin(async (nitroApp: any) => {
-    await connectToDatabase();
+    await pool.connect()
 
-    nitroApp.hooks.hook('close', () => {
-        disconnectFromDatabase();
+    nitroApp.hooks.hook('close', async () => {
+        await pool.end();
     });
 });

@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcrypt";
+import {pool} from "~/server/utils/db-client";
 
 const refreshTokens: Record<number, Record<string, any>> = {}
 export const SECRET = 'fsuhviuuzihtaivinviuifnccuih46461s4g1s94vs9g'
 export default defineEventHandler(async event => {
     const response = await readBody(event);
-    const selectProfil = await client.query(`SELECT password, id
+    const selectProfil = await pool.query(`SELECT password, id
                                              from profil
                                              where mail = '${response.email}'`);
     const hash = selectProfil.rows[0];
@@ -18,7 +19,7 @@ export default defineEventHandler(async event => {
         });
     }
 
-    const profil = await client.query(`SELECT id, first_name, last_name, pseudo, bio
+    const profil = await pool.query(`SELECT id, first_name, last_name, pseudo, bio
                                        FROM profil
                                        WHERE id = ${selectProfil.rows[0].id}`);
     const profilData = profil.rows[0];

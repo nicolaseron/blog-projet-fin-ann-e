@@ -3,6 +3,7 @@ import {
     PutObjectCommand,
 } from "@aws-sdk/client-s3";
 import jwt from "jsonwebtoken";
+import {pool} from "~/server/utils/db-client";
 
 export default defineEventHandler(async (event) => {
 
@@ -44,7 +45,7 @@ export default defineEventHandler(async (event) => {
         }
         const insertPost =
             "INSERT INTO posts (id_profil, title, content,tags) VALUES ($1, $2, $3, $4) RETURNING id";
-        const insertQueryPost = await client.query(insertPost,
+        const insertQueryPost = await pool.query(insertPost,
             [data.idProfil, data.title, data.content, data.tags]);
 
         const idPost = insertQueryPost.rows[0].id;
@@ -67,7 +68,7 @@ export default defineEventHandler(async (event) => {
         );
         const url = `https://${params.Bucket}.s3.${params.Region}.amazonaws.com/${params.Key}`;
         const insertImage = "INSERT INTO images (id_post, img_link) VALUES ($1, $2)";
-        await client.query(insertImage, [idPost, url]);
+        await pool.query(insertImage, [idPost, url]);
     } catch (err) {
         console.error("Erreur lors de l'éxécution de la requête", err);
     }
