@@ -1,7 +1,7 @@
 <template>
   <section class="p-12 text-darkBlue w-full">
-    <div class="flex flex-col items-center justify-between md:flex-row">
-      <nuxt-link to="addPost" class="custom_btn w-fit order-1 md:order-2"
+    <div class="flex flex-col items-center gap-x-10 justify-between md:flex-row">
+      <nuxt-link to="addPost" class="custom_btn text-nowrap w-fit order-1 md:order-2"
       >Ajouter vos propes postes
       </nuxt-link
       >

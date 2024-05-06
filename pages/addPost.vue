@@ -1,5 +1,5 @@
 <template>
-  <section class="flex-1 flex p-10 flex-col lg:flex-row">
+  <section class="flex-1 flex p-10 flex-col lg:flex-row gap-x-20">
     <form @submit.prevent="sendPost" class="flex-1" ref="myForm">
       <div class="flex flex-col gap-y-5">
         <div class="flex flex-col gap-y-3">
@@ -29,22 +29,20 @@
               class="custom_input"
           />
         </div>
-        <div class="flex gap-x-3">
-          <label for="content">Contenu du poste&nbsp;:</label>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <label for="content" class="text-nowrap">Contenu du poste&nbsp;:</label>
           <textarea
-              class="bg-transparent border border-darkBlue"
+              class="bg-transparent border border-darkBlue w-full max-w-[550px] min-h-52"
               name="content"
               id="content"
               v-model="content"
               spellcheck="true"
               required
-              cols="60"
-              rows="10"
           ></textarea>
         </div>
         <div class="flex flex-col lg:flex-row">
-          <p class="inline-block mr-3">Tags :</p>
-          <div class="gap-x-3 flex">
+          <p class="inline-block mr-3 mb-5">Tags :</p>
+          <div class="gap-3 flex flex-col sm:flex-row">
             <div>
               <input
                   type="radio"
