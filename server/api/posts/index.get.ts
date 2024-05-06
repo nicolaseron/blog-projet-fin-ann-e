@@ -1,6 +1,8 @@
+import { Posts } from "../models/Posts";
+import {QueryResult} from "pg";
 export default defineEventHandler(async () => {
     try {
-        const result = await client.query(`
+        const result:QueryResult<Posts> = await client.query(`
             SELECT posts.id,
                    posts.title,
                    posts.content,
