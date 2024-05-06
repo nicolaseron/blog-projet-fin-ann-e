@@ -22,6 +22,7 @@ export const connectToDatabase = async () => {
 };
 client.on('error', async err => {
     console.log("postgres error try to reconnect")
+    await client.end()
     isConnected = false;
     await connectToDatabase()
 });

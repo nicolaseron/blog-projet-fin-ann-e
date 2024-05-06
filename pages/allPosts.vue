@@ -31,6 +31,9 @@
             <button @click="toggleFilter('mode')" class="custom_btn"
                     :class="{ 'focusBtn': filterTag === 'mode' && !filterText.length }">Mode
             </button>
+            <button @click="toggleFilter('autre')" class="custom_btn"
+                    :class="{ 'focusBtn': filterTag === 'autre' && !filterText.length }">Autre
+            </button>
           </div>
         </div>
       </div>

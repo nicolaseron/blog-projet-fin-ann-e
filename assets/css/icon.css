@@ -9,3 +9,19 @@
     width: 1em;
     height: 1em;
 }
+.icon-modify {
+    mask-image: url('/logo/pen-to-square-solid.svg');
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    mask-size: contain;
+    width: 1em;
+    height: 1em;
+}
+.icon-delete {
+    mask-image: url('/logo/trash-can-solid.svg');
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    mask-size: contain;
+    width: 1em;
+    height: 1em;
+}
