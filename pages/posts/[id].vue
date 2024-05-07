@@ -13,7 +13,7 @@
     <nuxt-picture :src="post.img_link"
                   :img-attrs="{class: 'w-full h-auto object-cover max-w-[80%] mx-auto mt-8 mb-2 rounded-xl md:max-w-[700px]'}">
     </nuxt-picture>
-    <div v-if="isOwnPost" class="text-right space-x-2">
+    <div v-if="isOwnPost || dataProfil?.admin" class="text-right space-x-2">
       <button class="icon icon-modify text-green-700"></button>
       <button @click="displayDeleteModal= !displayDeleteModal" class="icon icon-delete text-red-600"></button>
     </div>
@@ -58,9 +58,7 @@
 
 <script setup lang="ts">
 
-
 const router = useRouter()
-
 const route = useRoute();
 const formatDate = ref('');
 const {status, data} = useAuth();
@@ -86,7 +84,8 @@ async function deletePost() {
       method: "DELETE",
       headers: {
         'Authorization': `Bearer ${token}`
-      }
+      },
+      body: {isAdmin : dataProfil.admin, isOwnPost: isOwnPost.value}
     })
     await router.push("../allPosts")
   } catch (error) {
