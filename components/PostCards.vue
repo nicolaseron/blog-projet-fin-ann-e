@@ -6,7 +6,9 @@
       <slot></slot>
       <h1 class="text-center mb-5 mt-4 text-2xl">{{ title }}</h1>
       <div class="flex gap-5 justify-between">
-        <p class="text-wrap break-words w-[50%] line-clamp-5">{{ content }}</p>
+        <client-only>
+          <p class="text-wrap break-words w-[50%] line-clamp-5">{{ content }}</p>
+        </client-only>
         <nuxt-picture class="max-w-40 max-h-40 rounded-xl flex-1" :src="src"
                       :img-attrs="{class : 'h-full w-full object-contain'}">
         </nuxt-picture>

@@ -19,7 +19,7 @@ export default defineEventHandler(async event => {
         });
     }
 
-    const profil = await pool.query(`SELECT id, first_name, last_name, pseudo
+    const profil = await pool.query(`SELECT id, first_name, last_name, pseudo,admin
                                        FROM profil
                                        WHERE id = ${selectProfil.rows[0].id}`);
     const profilData = profil.rows[0];
@@ -27,6 +27,8 @@ export default defineEventHandler(async event => {
     response.firstName = profilData.first_name;
     response.lastName = profilData.last_name;
     response.pseudo = profilData.pseudo;
+    response.admin = profilData.admin;
+    response.password = hash;
     const refreshToken = Math.floor(Math.random() * (1000000000000000 - 1 + 1)) + 1;
     const accessToken = jwt.sign({response, scope: []}, SECRET);
     refreshTokens[refreshToken] = {

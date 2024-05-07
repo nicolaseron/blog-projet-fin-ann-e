@@ -6,6 +6,7 @@
       <p>Prénom : {{ data.response.firstName }}</p>
       <p>Email : {{ data.response.email }}</p>
       <p>Pseudo : {{ data.response.pseudo }}</p>
+      <p>Admin : {{ data.response.admin ? 'Oui' : 'Non' }}</p>
     </div>
   </section>
 </template>
