@@ -12,7 +12,6 @@
 </template>
 <script setup lang="ts">
 const {data} = useAuth()
-console.log(data)
 </script>
 
 <style scoped>
