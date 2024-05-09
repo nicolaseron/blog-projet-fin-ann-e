@@ -13,13 +13,24 @@
     <nuxt-picture :src="post.img_link"
                   :img-attrs="{class: 'w-full h-auto object-cover max-w-[80%] mx-auto mt-8 mb-2 rounded-xl md:max-w-[700px]'}">
     </nuxt-picture>
-    <div v-if="isOwnPost || dataProfil?.admin" class="text-right space-x-2">
-      <button class="icon icon-modify text-green-700"></button>
+    <div v-if="isOwnPost || profilData?.admin" class="text-right space-x-2">
+      <button @click="displayModifyInput = !displayModifyInput " class="icon icon-modify text-green-700"></button>
       <button @click="displayDeleteModal= !displayDeleteModal" class="icon icon-delete text-red-600"></button>
     </div>
-    <h1 class="text-center my-14 text-4xl">{{ post.title }}</h1>
-    <p v-text="post.content" class="mb-10 max-w-[1500px] m-auto whitespace-pre-wrap"></p>
+    <div class="text-center my-14 text-4xl w-full">
+      <h1 v-if="!displayModifyInput">{{ post.title }}</h1>
+      <input v-else type="text" v-model="newTitle" class="w-full text-2xl text-center">
+    </div>
+    <div class="mb-10 max-w-[1300px] mx-auto whitespace-pre-wrap">
+      <p v-if="!displayModifyInput" v-text="post.content"></p>
+      <textarea v-else v-model="newContent" class="w-full" rows="20" cols="200"></textarea>
+    </div>
+    <div v-if="displayModifyInput" class="space-x-4 text-center">
+      <button @click="modifyPost" class="custom_btn">Modifier</button>
+      <button @click="displayModifyInput = !displayModifyInput" class="custom_btn">Annuler</button>
+    </div>
     <p class="my-5 italic text-sm text-right">Crée le {{ formatDate }} par {{ post.pseudo }}</p>
+
     <div id="popup-modal" tabindex="-1" v-if="displayDeleteModal"
          class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 w-full max-w-md max-h-full">
@@ -63,29 +74,35 @@ const route = useRoute();
 const formatDate = ref('');
 const {status, data} = useAuth();
 const post = ref();
-const dataProfil = data.value?.response;
+const profilData = data.value?.response;
 const isOwnPost = ref();
 const displayDeleteModal = ref(false);
+const displayModifyInput = ref(false);
+
 try {
   const {data: postData} = await useFetch(`/api/posts/${route.params.id}`);
   post.value = postData.value;
   formatDate.value = new Date(post.value?.created_date).toLocaleDateString();
-  isOwnPost.value = status.value === 'authenticated' && dataProfil.id === Number(post.value?.id_profil);
+  isOwnPost.value = status.value === 'authenticated' && profilData.id === Number(post.value?.id_profil);
 } catch (error) {
-  console.error("Erreur lors de la récupération des données");
+  console.error("Erreur lors de la récupération des données", error);
 }
+
+const newTitle = ref(post.value.title);
+const newContent = ref(post.value.content);
+const idPost = post.value.id;
+const token = ref()
 
 async function deletePost() {
   try {
-    const postToDelete = post.value.id;
-    const token = document.cookie.split('; ').find(row => row.startsWith('auth.token=')).split('=')[1];
-    if (!token)return;
-    await $fetch(`/api/posts/delete/${postToDelete}`, {
+    token.value = document.cookie.split('; ').find(row => row.startsWith('auth.token='))?.split('=')[1];
+    if (!token.value) return;
+    await $fetch(`/api/posts/delete/${idPost}`, {
       method: "DELETE",
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token.value}`
       },
-      body: {isAdmin : dataProfil.admin, isOwnPost: isOwnPost.value}
+      body: {isAdmin: profilData.admin, isOwnPost: isOwnPost.value}
     })
     await router.push("../allPosts")
   } catch (error) {
@@ -93,4 +110,22 @@ async function deletePost() {
   }
 }
 
+async function modifyPost() {
+  if ((isOwnPost.value || profilData.admin) && (post.value.title !== newTitle.value || post.value.content !== newContent.value)) {
+    token.value = document.cookie.split('; ').find(row => row.startsWith('auth.token='))?.split('=')[1];
+    if (!token.value) return;
+    try {
+      await $fetch(`/api/posts/put/${idPost}`, {
+        method: "PUT",
+        headers: {
+          'Authorization': `Bearer ${token.value}`
+        },
+        body: {title: newTitle.value, content: newContent.value, isAdmin: profilData.admin, isOwnPost: isOwnPost.value}
+      })
+      location.reload()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 </script>
