@@ -7,7 +7,7 @@
           'bg-yellow-400': post.tags === 'politique',
           'bg-purple-400': post.tags === 'mode'
                 }"
-            class="p-2 rounded-xl block ml-auto mt-5 w-fit">
+            class="p-2 rounded-xl block ml-auto mt-5 w-fit border-none shadow shadow-black">
              {{ post.tags }}
       </span>
     <nuxt-picture :src="post.img_link"

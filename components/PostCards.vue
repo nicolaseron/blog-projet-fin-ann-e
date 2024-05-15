@@ -1,7 +1,7 @@
 <template>
   <nuxt-link :to="to">
     <div
-        class="bg-headerFooter text-white rounded-2xl overflow-hidden p-5 w-[300px] h-[310px] sm:w-[500px] border-2 border-headerFooter hover:bg-darkBlue"
+        class="bg-headerFooter text-white rounded-2xl overflow-hidden p-5 w-[300px] h-[310px] sm:w-[500px] border-2 border-headerFooter hover:bg-darkBlue shadow-xl shadow-darkBlue"
     >
       <slot></slot>
       <h1 class="text-center mb-5 mt-4 text-2xl">{{ title }}</h1>

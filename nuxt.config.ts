@@ -2,6 +2,9 @@
 
 export default defineNuxtConfig({
     devtools: {enabled: true},
+    app: {
+        pageTransition: { name: 'page', mode: 'out-in' }
+    },
     css: ["~/assets/css/main.css", "~/assets/css/base.css" , "~/assets/css/icon.css"],
     modules: ["@nuxtjs/tailwindcss", '@nuxt/image', '@sidebase/nuxt-auth'],
     build: {
