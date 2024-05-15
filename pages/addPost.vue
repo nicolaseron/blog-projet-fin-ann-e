@@ -32,7 +32,7 @@
         <div class="flex flex-col gap-3 sm:flex-row">
           <label for="content" class="text-nowrap">Contenu du poste&nbsp;:</label>
           <textarea
-              class="bg-transparent border border-darkBlue w-full max-w-[550px] min-h-52"
+              class="bg-transparent border border-darkBlue w-full max-w-[550px] min-h-52 rounded-xl"
               name="content"
               id="content"
               v-model="content"
@@ -107,9 +107,10 @@
     <div class="flex-1 lg:ml-5">
       <h1 class="text-2xl">Rendu sur la page :</h1>
       <div
-          class="border border-darkBlue max-w-[700px] h-auto min-h-[90%] mt-5 px-5 lg:px-10 break-words "
+          class="border border-darkBlue max-w-[700px] h-auto min-h-[90%] mt-5 px-5 lg:px-10 break-words rounded-xl"
       >
-            <span v-show="tagValue" :class="tagClass" class="p-2 rounded-xl inline-block float-right my-3">
+            <span v-show="tagValue" :class="tagClass"
+                  class="p-2 rounded-xl inline-block float-right my-3 border-none shadow shadow-black">
               {{ tagValue }}
             </span>
         <img
@@ -120,14 +121,15 @@
         <p class="whitespace-pre-line">{{ content }}</p>
       </div>
     </div>
+    <div class="absolute bottom-16 right-10 bg-green-500 text-center rounded-3xl p-5 opacity-0"
+         :class="{active : succesPostSend}">
+      <h2>Votre article est bien ajouté ! &#x1F389;</h2>
+      <p>Vous pouvez le consultez depuis la page
+        <nuxt-link to="/allPosts" class="underline text-blue-600">des postes</nuxt-link>
+      </p>
+    </div>
   </section>
-  <div class="absolute bottom-16 right-10 bg-green-500 text-center rounded-3xl p-5 opacity-0"
-       :class="{active : succesPostSend}">
-    <h2>Votre article est bien ajouté ! &#x1F389;</h2>
-    <p>Vous pouvez le consultez depuis la page
-      <nuxt-link to="/allPosts" class="underline text-blue-600">des postes</nuxt-link>
-    </p>
-  </div>
+
 </template>
 <script setup>
 definePageMeta({middleware: 'auth'});
