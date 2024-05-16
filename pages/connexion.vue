@@ -120,6 +120,14 @@
          class="bg-red-500 absolute bottom-10 right-10 opacity-0 transition-opacity text-white p-5 rounded-3xl"
          v-html="textBannerMessage">
     </div>
+    <div v-if="showModal"
+         class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-card p-10 flex items-center justify-center flex-col gap-y-5 rounded-2xl">
+      <h1 class="text-xl text-nowrap">Entrez le code que vous avez reçu par E-mail</h1>
+      <p class="text-xs">N'oublier pas d'aller voir dans vos spams</p>
+      <input type="text" v-model="inputCode">
+      <button class="custom_btn" @click="verifyCode">Vérifier</button>
+      <p v-if="showErrorMessage" class="text-sm text text-red-600">Le code de vérification ne correspond pas !</p>
+    </div>
   </section>
 </template>
 <script setup lang="ts">
@@ -132,7 +140,7 @@ definePageMeta({
 })
 const error = useError();
 const {signIn, status, token} = useAuth();
-
+const showModal = ref(false)
 const signUpEmail = ref("");
 const signUpPassword = ref("");
 const firstName = ref("");
@@ -140,11 +148,15 @@ const lastName = ref("");
 const signInEmail = ref("");
 const signInPassword = ref("");
 const pseudo = ref("");
+const inputCode = ref("")
 const signUpForm = ref(null);
 const signUpErrorMessage = ref("");
 const signInErrorMessage = ref("");
 const passwordErrorInfo = ref(false);
 const textBannerMessage = ref("");
+const dataForm = ref()
+const code = ref()
+const showErrorMessage = ref(false)
 const validateEmail = (email: string) => {
   return String(email)
       .toLowerCase()
@@ -159,7 +171,6 @@ const validatePassword = (pw: string) => {
       /[^A-Za-z0-9]/.test(pw) &&
       pw.length > 8;
 };
-
 const validatePseudo = (pseudo: string) => {
   const lowercaseCount = (pseudo.match(/[a-z]/g) || []).length;
   return (pseudo.length >= 5 && !/\s/.test(pseudo) && lowercaseCount >= 3);
@@ -194,17 +205,19 @@ async function signUpWithFormData() {
         <ul class="list-disc list-inside">
           <li>Minimum 5 caractères</li>
           <li>Ne doit pas contenir d'espaces</li>
-          <li>Au moins trois minuscule</li>
+          <li>Au moins trois minuscules</li>
         </ul>`;
     setTimeout(() => {
       passwordErrorInfo.value = true;
     }, 6000)
     throw new Error("Le pseudo est invalide");
   }
-  const dataForm = new FormData(signUpForm.value);
+  code.value = String(Math.floor(Math.random() * 9000 + 1000));
+  if (signUpForm.value) dataForm.value = new FormData(signUpForm.value);
+  dataForm.value.set('code', code.value)
   const response = await fetch("api/auth/register", {
     method: "POST",
-    body: dataForm
+    body: dataForm.value
   });
   if (!response.ok) {
     if (response.statusText === "emailExist") {
@@ -213,8 +226,22 @@ async function signUpWithFormData() {
       signUpErrorMessage.value = `Ce pseudo est déjà utilisé, <br> chosissez-en un autre !`;
     }
   } else {
-    await navigateTo("/confirmSignUp");
+    showModal.value = true;
   }
+}
+
+async function verifyCode() {
+  if (inputCode.value === code.value) {
+    try {
+      const profil = await fetch("api/auth/profil", {
+        method: "POST",
+        body: dataForm.value
+      })
+      await navigateTo("/confirmSignUp");
+    } catch (error) {
+      return error;
+    }
+  } else showErrorMessage.value = true;
 }
 
 async function signInWithCredentials() {
@@ -259,5 +286,9 @@ function toggleFaceCard() {
 .displayErrorMessage {
   opacity: 1;
   transition: opacity 2s ease;
+}
+
+.bg-card {
+  background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);
 }
 </style>
