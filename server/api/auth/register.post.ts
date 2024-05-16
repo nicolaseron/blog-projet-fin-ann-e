@@ -1,18 +1,19 @@
-import bcrypt from "bcrypt";
 import {pool} from "~/server/utils/db-client";
+import {MailerSend, EmailParams, Sender, Recipient} from "mailersend";
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
     const response = await readFormData(event);
     const userEmail = response.get('email');
     const userPassword = response.get('password');
     const userFirstName = response.get('firstname');
     const userLastName = response.get('lastName');
     const userPseudo = response.get('pseudo');
+    const code = response.get('code')
 
     const searchMailIntoDB = await pool.query('SELECT mail FROM profil WHERE mail = $1', [userEmail]);
-    const email:string = searchMailIntoDB.rows[0];
+    const email: string = searchMailIntoDB.rows[0];
     const searchPseudoIntoDB = await pool.query('SELECT pseudo FROM profil WHERE pseudo = $1', [userPseudo]);
-    const pseudo:string = searchPseudoIntoDB.rows[0];
+    const pseudo: string = searchPseudoIntoDB.rows[0];
 
     if (email) {
         throw createError({
@@ -25,26 +26,22 @@ export default defineEventHandler(async event => {
             statusMessage: "pseudoExist"
         });
     } else {
-        if (userPassword) {
-            const password = userPassword.toString();
-            bcrypt.hash(password, 10, async function (err, hash) {
-                if (err) {
-                    throw createError({
-                        statusCode: 500,
-                        statusMessage: "Une erreur s'est produite lors du hachage du mot de passe"
-                    });
-                } else {
-                    try {
-                        const insertProfil = "INSERT INTO profil (first_name, last_name, mail, password, pseudo) VALUES ($1, $2, $3, $4, $5)";
-                        await pool.query(insertProfil, [userFirstName, userLastName, userEmail, hash, userPseudo]);
-                    } catch (error) {
-                        throw createError({
-                            statusCode: 500,
-                            statusMessage: "Une erreur s'est produite lors de l'insertion dans la base de données"
-                        });
-                    }
-                }
-            });
-        }
+        const mailerSend = new MailerSend({
+            apiKey: String(process.env.MAILERSEND_API_KEY),
+        });
+
+        const sentFrom = new Sender("MS_fAnJeA@trial-yzkq340opw24d796.mlsender.net", "coffee time");
+
+        const recipients = [
+            new Recipient(String(userEmail), "test")
+        ];
+        const emailParams = new EmailParams()
+            .setFrom(sentFrom)
+            .setTo(recipients)
+            .setSubject("E-mail vérification Coffee Time")
+            .setText(`Voici votre code de vérification pour l'inscription au blog Coffee Time : ${code}`);
+
+        await mailerSend.email.send(emailParams)
     }
+
 });
