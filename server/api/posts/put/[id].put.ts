@@ -8,5 +8,5 @@ export default defineEventHandler ( async (event) => {
         });
     }
     await pool.query(
-        'UPDATE posts SET title = $1 , content = $2 WHERE id = $3', [body.title, body.content, idPost ]);
+        'UPDATE posts SET title = $1 , content = $2 , modified_date = $3  WHERE id = $4', [body.title, body.content, new Date(), idPost ]);
 })

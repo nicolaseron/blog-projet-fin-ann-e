@@ -13,6 +13,10 @@
     <nuxt-picture :src="post.img_link"
                   :img-attrs="{class: 'w-full h-auto object-cover max-w-[80%] mx-auto mt-8 mb-2 rounded-xl md:max-w-[700px]'}">
     </nuxt-picture>
+    <div class="my-5 italic text-sm text-right">
+      <p v-if="post.modified_date">Modifié le {{new Date(post.modified_date).toLocaleDateString()}} par {{post.pseudo}}</p>
+      <p v-else>Crée le {{ formatDate }} par {{ post.pseudo }}</p>
+    </div>
     <div v-if="isOwnPost || profilData?.admin" class="text-right space-x-2">
       <button @click="displayModifyInput = !displayModifyInput " class="icon icon-modify text-green-700"></button>
       <button @click="displayDeleteModal= !displayDeleteModal" class="icon icon-delete text-red-600"></button>
@@ -29,7 +33,6 @@
       <button @click="modifyPost" class="custom_btn">Modifier</button>
       <button @click="displayModifyInput = !displayModifyInput" class="custom_btn">Annuler</button>
     </div>
-    <p class="my-5 italic text-sm text-right">Crée le {{ formatDate }} par {{ post.pseudo }}</p>
 
     <div id="popup-modal" tabindex="-1" v-if="displayDeleteModal"
          class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -87,7 +90,6 @@ try {
 } catch (error) {
   console.error("Erreur lors de la récupération des données", error);
 }
-
 const newTitle = ref(post.value.title);
 const newContent = ref(post.value.content);
 const idPost = post.value.id;
