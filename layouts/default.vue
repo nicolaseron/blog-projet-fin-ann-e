@@ -7,7 +7,6 @@
     <the-footer></the-footer>
   </main>
 </template>
-//background-image: linear-gradient(-225deg, #CBBACC 0%, #2580B3 100%);
 
 <style scoped>
 .bg-background {
