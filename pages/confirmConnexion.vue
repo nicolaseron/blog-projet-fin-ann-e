@@ -12,10 +12,6 @@
 definePageMeta({middleware: 'auth'})
 const {data} = useAuth();
 const profil = data.value.response;
-// const profil= ref(null)
-// if (data.value) {
-//   profil.value = data.value.response
-// }
 </script>
 
 <style scoped>

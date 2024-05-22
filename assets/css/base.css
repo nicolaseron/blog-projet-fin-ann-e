@@ -10,6 +10,15 @@
 .custom_input {
   @apply bg-transparent outline-none border-b border-darkBlue;
 }
+.custom_input:-webkit-autofill {
+  @apply bg-transparent outline-none border-b border-darkBlue;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0 40rem #2d4059 inset;
+}
 .allPostsDescritpion {
   text-overflow: ellipsis;
 }
