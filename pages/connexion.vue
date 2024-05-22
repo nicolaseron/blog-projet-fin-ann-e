@@ -7,11 +7,11 @@
         :class="{
           rotationCard: !faceCardVisible,
         }"
-        class="card w-72 h-[390px] sm:w-80 md:w-96 sm:h-[450px]"
+        class="card w-72 h-[390px] sm:w-80 md:w-96 sm:h-[450px] z-10"
     >
 
       <div
-          class="card-front bg-headerFooter text-white rounded-lg px-5 py-6"
+          class="card-front bg-headerFooter text-white rounded-lg px-5 py-6 "
       >
         <h1 class="text-center font-bold">Connexion</h1>
         <form @submit.prevent="signInWithCredentials" class="m-auto h-full">
@@ -22,6 +22,7 @@
                 placeholder="Email"
                 aria-label="email"
                 class="custom_input"
+                required
                 v-model="signInEmail"
             />
             <input
@@ -30,6 +31,7 @@
                 placeholder="Mot de passe"
                 aria-label="Mot de passe"
                 class="custom_input"
+                required
                 v-model="signInPassword"
             />
             <!--              <a href="#" class="mb-5 hover:underline">Mot de passe oublié ?</a>-->
@@ -49,10 +51,10 @@
         </div>
       </div>
       <div
-          class="card-back bg-headerFooter text-white rounded-lg px-5 py-6 flex flex-col gap-5"
+          class="card-back bg-headerFooter text-white rounded-lg px-5 py-6 flex flex-col gap-2 sm:gap-4"
       >
         <h1 class="text-center font-bold">Inscription</h1>
-        <form @submit.prevent="signUpWithFormData" class="flex flex-col gap-5" ref="signUpForm">
+        <form @submit.prevent="signUpWithFormData" class="flex flex-col gap-2 sm:gap-4" ref="signUpForm">
           <input
               type="text"
               name="lastName"
@@ -101,6 +103,15 @@
               v-model="signUpPassword"
               required
           />
+          <input
+              type="password"
+              name="password"
+              placeholder="Confirmation mot de passe"
+              aria-label="Confirmation mot de passe"
+              class="custom_input"
+              v-model="confirmationSignUpPassword"
+              required
+          />
           <div class="text-center">
             <button type="submit" class="custom_btn">M'inscrire !</button>
           </div>
@@ -147,6 +158,7 @@ const firstName = ref("");
 const lastName = ref("");
 const signInEmail = ref("");
 const signInPassword = ref("");
+const confirmationSignUpPassword = ref("")
 const pseudo = ref("");
 const inputCode = ref("")
 const signUpForm = ref(null);
@@ -197,6 +209,9 @@ async function signUpWithFormData() {
       passwordErrorInfo.value = false;
     }, 6000)
     throw new Error("Le mot de passe est invalide");
+  } else if (signUpPassword.value !== confirmationSignUpPassword.value) {
+    signUpErrorMessage.value = 'Les mots de passe ne correspondent pas !'
+    throw new Error('Les mots de passe ne correspondent pas !')
   } else if (!validatePseudo(pseudo.value)) {
     passwordErrorInfo.value = true;
     textBannerMessage.value = `
@@ -210,7 +225,7 @@ async function signUpWithFormData() {
     setTimeout(() => {
       passwordErrorInfo.value = true;
     }, 6000)
-    throw new Error("Le pseudo est invalide");
+    throw new Error("Le pseudo est invalide")
   }
   code.value = String(Math.floor(Math.random() * 9000 + 1000));
   if (signUpForm.value) dataForm.value = new FormData(signUpForm.value);
