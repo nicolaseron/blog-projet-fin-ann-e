@@ -33,3 +33,11 @@
     width: 1em;
     height: 1em;
 }
+.circle-user {
+    mask-image: url('/logo/circle-user-solid.svg');
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    mask-size: contain;
+    width: 1em;
+    height: 1em;
+}

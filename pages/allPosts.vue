@@ -11,6 +11,7 @@
                 id="searchPost"
                 class="custom_input md:w-full"
                 @input="searchPost"
+                autocomplete="off"
             />
           </div>
           <div class="flex flex-col gap-3 items-center md:flex-row">

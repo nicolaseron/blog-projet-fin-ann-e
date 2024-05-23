@@ -14,25 +14,45 @@
                   :img-attrs="{class: 'w-full h-auto object-cover max-w-[80%] mx-auto mt-8 mb-2 rounded-xl md:max-w-[700px]'}">
     </nuxt-picture>
     <div class="my-5 italic text-sm text-right">
-      <p v-if="post.modified_date">Modifié le {{new Date(post.modified_date).toLocaleDateString()}} par {{post.pseudo}}</p>
+      <p v-if="post.modified_date">Modifié le {{ new Date(post.modified_date).toLocaleDateString() }} par
+        {{ post.pseudo }}</p>
       <p v-else>Crée le {{ formatDate }} par {{ post.pseudo }}</p>
     </div>
     <div v-if="isOwnPost || profilData?.admin" class="text-right space-x-2">
       <button @click="displayModifyInput = !displayModifyInput " class="icon icon-modify text-green-700"></button>
       <button @click="displayDeleteModal= !displayDeleteModal" class="icon icon-delete text-red-600"></button>
     </div>
-    <div class="text-center my-14 text-4xl w-full">
-      <h1 v-if="!displayModifyInput">{{ post.title }}</h1>
-      <input v-else type="text" v-model="newTitle" class="w-full text-2xl text-center">
-    </div>
-    <div class="mb-10 max-w-[1300px] mx-auto whitespace-pre-wrap">
-      <p v-if="!displayModifyInput" v-text="post.content"></p>
-      <textarea v-else v-model="newContent" class="w-full" rows="20" cols="200"></textarea>
-    </div>
-    <div v-if="displayModifyInput" class="space-x-4 text-center">
-      <button @click="modifyPost" class="custom_btn">Modifier</button>
-      <button @click="displayModifyInput = !displayModifyInput" class="custom_btn">Annuler</button>
-    </div>
+    <article class="max-w-[1300px] mx-auto">
+
+      <div class="text-center my-14 text-4xl w-full">
+        <h1 v-if="!displayModifyInput">{{ post.title }}</h1>
+        <input v-else type="text" v-model="newTitle" class="w-full text-2xl text-center">
+      </div>
+      <div class="mb-10 whitespace-pre-wrap">
+        <p v-if="!displayModifyInput" v-text="post.content"></p>
+        <textarea v-else v-model="newContent" class="w-full" rows="20" cols="200"></textarea>
+      </div>
+      <div v-if="displayModifyInput" class="space-x-4 text-center">
+        <button @click="modifyPost" class="custom_btn">Modifier</button>
+        <button @click="displayModifyInput = !displayModifyInput" class="custom_btn">Annuler</button>
+      </div>
+      <h2 class="text-2xl underline text-center">Commentaires</h2>
+      <div class="space-y-5 my-10">
+        <div v-if="comments" v-for="comment in comments" :key="comment.id" class="bg-white p-2 rounded-2xl">
+          <div class="flex items-center gap-x-2">
+            <i class="icon circle-user text-xl"></i>
+            <p class="italic ">{{ comment.pseudo }} à écrit le {{ new Date(comment.date).toLocaleDateString() }} :</p>
+          <button v-if="profilData?.admin" class="block ml-auto mr-2 text-red-600" @click="deleteComment(comment.id)"><i class="icon icon-delete"></i></button>
+          </div>
+          <p class="px-7 mt-1 break-words">{{ comment.comment }}</p>
+        </div>
+        <div class="flex items-center gap-x-5">
+          <input autocomplete="off" type="text" name="comment" placeholder="Ajouter un commentaire" v-model="newComment"
+                 class="custom_input custom_input_comment w-full p-2">
+          <button class="custom_btn" @click="sendComment">Commenter</button>
+        </div>
+      </div>
+    </article>
 
     <div id="popup-modal" tabindex="-1" v-if="displayDeleteModal"
          class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -77,14 +97,17 @@ const route = useRoute();
 const formatDate = ref('');
 const {status, data} = useAuth();
 const post = ref();
+const comments = ref()
 const profilData = data.value?.response;
 const isOwnPost = ref();
 const displayDeleteModal = ref(false);
 const displayModifyInput = ref(false);
+const newComment = ref('');
 
 try {
   const {data: postData} = await useFetch(`/api/posts/${route.params.id}`);
-  post.value = postData.value;
+  post.value = postData.value?.post;
+  comments.value = postData.value?.comments;
   formatDate.value = new Date(post.value?.created_date).toLocaleDateString();
   isOwnPost.value = status.value === 'authenticated' && profilData.id === Number(post.value?.id_profil);
 } catch (error) {
@@ -128,6 +151,35 @@ async function modifyPost() {
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+async function sendComment() {
+  const dataComment = {
+    comment: newComment.value,
+    user: profilData.id,
+    post: idPost
+  };
+  try {
+    await $fetch(`/api/comments/${idPost}.post.ts`, {
+      method: "POST",
+      body: dataComment,
+    })
+    location.reload();
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function deleteComment(idComment:number) {
+  try {
+    await $fetch(`/api/comments/delete/${idComment}`, {
+      method: "DELETE",
+      body: {isAdmin: profilData.admin , idComment}
+    })
+    location.reload();
+  } catch (error) {
+    console.log(error)
   }
 }
 </script>

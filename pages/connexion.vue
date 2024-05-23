@@ -7,15 +7,15 @@
         :class="{
           rotationCard: !faceCardVisible,
         }"
-        class="card w-72 h-[390px] sm:w-80 md:w-96 sm:h-[450px] z-10"
+        class="card w-72 h-[390px] bg-headerFooter rounded-lg sm:w-80 md:w-96 sm:h-[450px]"
     >
 
       <div
-          class="card-front bg-headerFooter text-white rounded-lg px-5 py-6 "
+          class="card-front text-white px-5 py-6"
       >
         <h1 class="text-center font-bold">Connexion</h1>
         <form @submit.prevent="signInWithCredentials" class="m-auto h-full">
-          <div class="flex flex-col  gap-10 mt-10">
+          <div class="flex flex-col gap-10 mt-10">
             <input
                 type="email"
                 name="email"
@@ -51,7 +51,7 @@
         </div>
       </div>
       <div
-          class="card-back bg-headerFooter text-white rounded-lg px-5 py-6 flex flex-col gap-2 sm:gap-4"
+          class="card-back text-white px-5 py-6 flex flex-col gap-2 sm:gap-4"
       >
         <h1 class="text-center font-bold">Inscription</h1>
         <form @submit.prevent="signUpWithFormData" class="flex flex-col gap-2 sm:gap-4" ref="signUpForm">
@@ -112,7 +112,7 @@
               v-model="confirmationSignUpPassword"
               required
           />
-          <div class="text-center">
+          <div class="text-center mt-2">
             <button type="submit" class="custom_btn">M'inscrire !</button>
           </div>
         </form>
@@ -207,6 +207,7 @@ async function signUpWithFormData() {
         </ul>`;
     setTimeout(() => {
       passwordErrorInfo.value = false;
+      textBannerMessage.value = '';
     }, 6000)
     throw new Error("Le mot de passe est invalide");
   } else if (signUpPassword.value !== confirmationSignUpPassword.value) {
