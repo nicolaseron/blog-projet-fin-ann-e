@@ -22,7 +22,15 @@ export default defineEventHandler(async (event) => {
                              JOIN profil ON profil.id = posts.id_profil
                     WHERE posts.id = ${idPost}
                 `);
-        return selectPost.rows[0];
+        const selectComments = await pool.query(
+            `
+                SELECT comments.id, comments.comment, pseudo, date
+                FROM comments
+                         JOIN profil ON profil.id = id_user
+                WHERE id_post = ${idPost}
+                ORDER BY id 
+            `)
+        return {post :selectPost.rows[0] , comments : selectComments.rows};
     } catch (error) {
         console.log("Erreur lors de l'éxécution de la requête post.get", error);
         throw new Error('Error executing query');

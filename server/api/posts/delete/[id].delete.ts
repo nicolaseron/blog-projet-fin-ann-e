@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
             message: "Le Token est invalide !"
         })
     }
+    await pool.query('DELETE FROM comments WHERE id_post = $1' , [idPost])
     await pool.query('DELETE FROM images WHERE id_post = $1', [idPost])
     await pool.query('DELETE FROM posts WHERE id = $1', [idPost])
 })
