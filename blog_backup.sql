@@ -5,7 +5,7 @@
 -- Dumped from database version 16.1
 -- Dumped by pg_dump version 16.1
 
--- Started on 2024-05-15 09:29:55
+-- Started on 2024-06-03 10:26:24
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -31,7 +31,8 @@ CREATE TABLE public.comments (
     id integer NOT NULL,
     id_post bigint NOT NULL,
     id_user bigint NOT NULL,
-    date date DEFAULT now() NOT NULL
+    date date DEFAULT now() NOT NULL,
+    comment character varying NOT NULL
 );
 
 
@@ -225,7 +226,8 @@ ALTER TABLE ONLY public.profil ALTER COLUMN id SET DEFAULT nextval('public.perso
 -- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.comments (id, id_post, id_user, date) FROM stdin;
+COPY public.comments (id, id_post, id_user, date, comment) FROM stdin;
+29	335	35	2024-05-23	Super poste ! 
 \.
 
 
@@ -240,8 +242,6 @@ COPY public.images (id, id_post, img_link) FROM stdin;
 163	334	https://imageblognico.s3.eu-west-3.amazonaws.com/image_post_334
 164	335	https://imageblognico.s3.eu-west-3.amazonaws.com/image_post_335
 165	336	https://imageblognico.s3.eu-west-3.amazonaws.com/image_post_336
-220	391	https://imageblognico.s3.eu-west-3.amazonaws.com/image_post_391
-222	393	https://imageblognico.s3.eu-west-3.amazonaws.com/image_post_393
 \.
 
 
@@ -255,9 +255,7 @@ COPY public.posts (id, id_profil, title, content, created_date, modified_date, t
 333	35	Simplifying Vue.js with Rest and Spread Operators	Take Your Vue.js Skills to the Next Level with These Powerful Techniques\r\n\r\nAs a Vue.js developer, you’re probably always on the lookout for ways to write cleaner, more concise code. Enter the rest and spread operators — two powerful features of modern JavaScript that can help you streamline your Vue.js applications. In this article, we’ll explore what these operators are and how you can leverage them in your Vue.js projects.\r\n\r\nWhat are Rest and Spread Operators?\r\nThe rest operator (...) allows you to collect the remaining elements of an array or object into a new array or object. Here's an example:\r\n\r\nconst [first, ...rest] = [1, 2, 3, 4, 5];\r\nconsole.log(first); // Output: 1\r\nconsole.log(rest); // Output: [2, 3, 4, 5]\r\nThe spread operator (...) does the opposite – it unpacks the elements of an array or object into individual elements. Here's an example:\r\n\r\nconst numbers = [1, 2, 3];\r\nconst moreNumbers = [...numbers, 4, 5];\r\nconsole.log(moreNumbers); // Output: [1, 2, 3, 4, 5]\r\nUsing Rest and Spread Operators in Vue.js\r\nNow that we understand what rest and spread operators are, let’s see how we can use…\r\n\r\n	2024-05-06	\N	tech
 334	35	Santé: Le Guide Complet Pour une Vie Équilibrée et Saine	La santé est un aspect essentiel de nos vies, mais parfois, elle peut sembler mystérieuse et complexe. Qu'est-ce que réellement la santé, et comment pouvons-nous la préserver de manière optimale ? Dans cet article, nous allons explorer les différentes facettes de la santé, des façons de la maintenir, et des avantages d'une vie saine.\r\n\r\nQu'est-ce que la Santé ?\r\nLa santé ne se limite pas seulement à l'absence de maladie. C'est un état de bien-être complet, tant physique que mental et social. Avoir une bonne santé signifie se sentir énergique, avoir un esprit clair, et entretenir des relations positives avec les autres. C'est un équilibre délicat que nous devons cultiver chaque jour.\r\n\r\nLes Piliers de la Santé\r\nPour maintenir et améliorer notre santé, il est essentiel de se concentrer sur les piliers fondamentaux : une alimentation équilibrée, une activité physique régulière, un sommeil de qualité et une gestion du stress efficace. En combinant ces différents éléments, nous pouvons renforcer notre système immunitaire, augmenter notre vitalité et réduire les risques de maladies chroniques.\r\n\r\nL'Importance de la Prévention\r\nPrévenir vaut mieux que guérir. En adoptant un mode de vie sain et en suivant des routines de prévention, nous pouvons éviter de nombreux problèmes de santé à long terme. Des examens médicaux réguliers, une hygiène de vie adéquate et des habitudes de vie saines peuvent faire toute la différence pour notre bien-être général.\r\n\r\nLes Bienfaits d'une Vie Saine\r\nVivre de manière saine ne se résume pas seulement à éviter les maladies. Cela signifie aussi profiter d'une meilleure qualité de vie, avoir plus d'énergie pour réaliser nos objectifs, et découvrir un sentiment de bien-être profond. En investissant dans notre santé dès maintenant, nous semons les graines d'un avenir plus radieux et épanouissant.\r\n\r\nEn conclusion, la santé est un trésor précieux que nous devons chérir et protéger. En prenant soin de nous-mêmes, en adoptant des habitudes de vie saines, et en restant conscients de nos besoins physiques et émotionnels, nous pouvons cultiver une santé optimale pour profiter pleinement de la vie. N'oublions jamais que notre bien-être est notre responsabilité la plus précieuse.	2024-05-06	\N	sante
 335	35	L'Impact de la Politique Moderne sur la Société Contemporaine	Introduction\r\nLa politique est un sujet complexe qui exerce une influence profonde sur la société. Dans cet article, nous explorerons l'impact de la politique moderne sur la vie quotidienne des citoyens.\r\n\r\nLa Politique et la Vie Quotidienne\r\nLa politique moderne affecte de nombreux aspects de la vie quotidienne, de la gestion des ressources publiques à la réglementation des activités économiques. Les décisions politiques influent sur la qualité de l'éducation, les soins de santé disponibles et même la sécurité des communautés. En comprenant mieux la politique, les citoyens peuvent prendre des décisions éclairées pour façonner l'avenir de leur société.\r\n\r\nLes Défis de l'Engagement Politique\r\nMalgré son importance, l'engagement politique peut sembler intimidant pour de nombreux citoyens. Comprendre le fonctionnement du système politique, décrypter les discours des politiciens et participer activement aux processus démocratiques peut sembler décourageant. Pourtant, s'engager politiquement est essentiel pour garantir une gouvernance juste et équitable.\r\n\r\nL'Importance de la Voix Citoyenne\r\nChaque voix compte en politique. Les citoyens ont le pouvoir d'influencer les décisions politiques en exprimant leurs préoccupations, en votant aux élections et en s'engageant dans des actions communautaires. En unissant leurs voix, les citoyens peuvent défendre des politiques qui reflètent leurs valeurs et leurs intérêts.\r\n\r\nConclusion\r\nEn conclusion, la politique moderne a un impact significatif sur la société contemporaine. En comprenant mieux la politique, en surmontant les défis de l'engagement politique et en faisant entendre leur voix, les citoyens peuvent contribuer à façonner un avenir plus juste et équitable pour tous.	2024-05-06	\N	politique
-336	35	Le Monde de la Mode: Un Regard Approfondi	Introduction\r\nLa mode, un univers fascinant qui évolue constamment, offrant un mélange dynamique de style, d'expression et d'innovation. Du chic urbain aux tenues de soirée élégantes, la mode est un moyen puissant de communiquer notre personnalité et notre créativité au monde qui nous entoure.\r\n\r\nHistoire de la Mode\r\nDepuis des siècles, la mode a été un reflet de l'époque et de la société. Des vêtements ornés de l'ère victorienne aux looks audacieux des années 80, chaque période a apporté son lot de tendances et de styles uniques. La mode est bien plus qu'un simple moyen de se vêtir; elle est un langage visuel qui transcende les frontières et les cultures.\r\n\r\nLes Tendances Actuelles\r\nAujourd'hui, la mode est plus diversifiée que jamais. Des influences streetwear aux accents vintage, il n'a jamais été aussi excitant d'explorer et d'expérimenter avec son style personnel. Les designers repoussent les limites de la créativité, offrant des collections qui défient les conventions et inspirent l'individualité.\r\n\r\nL'Impact de la Mode\r\nAu-delà de l'esthétique, la mode a un impact profond sur la société et l'environnement. De plus en plus de marques se tournent vers la durabilité et l'éthique, cherchant à réduire leur empreinte écologique et à promouvoir des pratiques commerciales éthiques. En tant que consommateurs, nous avons le pouvoir de soutenir des marques qui partagent nos valeurs.\r\n\r\nConclusion\r\nLa mode est bien plus qu'une simple question de vêtements; c'est une forme d'art vivante qui évolue et se renouvelle sans cesse. Que vous soyez passionné de haute couture ou adepte du style décontracté, la mode offre un espace pour exprimer qui nous sommes vraiment. Plongez dans ce monde dynamique et laissez votre style personnel briller.\r\n\r\nDécouvrir le monde de la mode, c'est s'engager dans un voyage de découverte de soi et d'expression créative. Que vous soyez un amateur de tendances ou un passionné de style intemporel, il y a toujours quelque chose de nouveau à explorer et à apprécier dans cet univers vibrant et en constante évolution.	2024-05-06	\N	mode
-391	35	Demo	Ceci est la démo	2024-05-13	\N	autre
-393	35	hh	hdhh	2024-05-13	\N	tech
+336	35	Le Monde de la Mode: Un Regard Approfondi !	Introduction\r\nLa mode, un univers fascinant qui évolue constamment, offrant un mélange dynamique de style, d'expression et d'innovation. Du chic urbain aux tenues de soirée élégantes, la mode est un moyen puissant de communiquer notre personnalité et notre créativité au monde qui nous entoure.\r\n\r\nHistoire de la Mode\r\nDepuis des siècles, la mode a été un reflet de l'époque et de la société. Des vêtements ornés de l'ère victorienne aux looks audacieux des années 80, chaque période a apporté son lot de tendances et de styles uniques. La mode est bien plus qu'un simple moyen de se vêtir; elle est un langage visuel qui transcende les frontières et les cultures.\r\n\r\nLes Tendances Actuelles\r\nAujourd'hui, la mode est plus diversifiée que jamais. Des influences streetwear aux accents vintage, il n'a jamais été aussi excitant d'explorer et d'expérimenter avec son style personnel. Les designers repoussent les limites de la créativité, offrant des collections qui défient les conventions et inspirent l'individualité.\r\n\r\nL'Impact de la Mode\r\nAu-delà de l'esthétique, la mode a un impact profond sur la société et l'environnement. De plus en plus de marques se tournent vers la durabilité et l'éthique, cherchant à réduire leur empreinte écologique et à promouvoir des pratiques commerciales éthiques. En tant que consommateurs, nous avons le pouvoir de soutenir des marques qui partagent nos valeurs.\r\n\r\nConclusion\r\nLa mode est bien plus qu'une simple question de vêtements; c'est une forme d'art vivante qui évolue et se renouvelle sans cesse. Que vous soyez passionné de haute couture ou adepte du style décontracté, la mode offre un espace pour exprimer qui nous sommes vraiment. Plongez dans ce monde dynamique et laissez votre style personnel briller.\r\n\r\nDécouvrir le monde de la mode, c'est s'engager dans un voyage de découverte de soi et d'expression créative. Que vous soyez un amateur de tendances ou un passionné de style intemporel, il y a toujours quelque chose de nouveau à explorer et à apprécier dans cet univers vibrant et en constante évolution.	2024-05-06	2024-05-23	mode
 \.
 
 
@@ -269,7 +267,7 @@ COPY public.posts (id, id_profil, title, content, created_date, modified_date, t
 
 COPY public.profil (id, first_name, last_name, mail, password, pseudo, admin) FROM stdin;
 35	Nicolas	Seron	nicoco@live.be	$2b$10$e6emTIMxxXNXcFIL.IFDDOWOaNEWFKo6sB2QU.qg6xmmI5ej8p11i	nico_97	t
-36	Nicolas	Seron	nicoco@live.fr	$2b$10$RRQABV3JGPxaH/x0dkqCMOwEJ07z9QM1AgzgdbtUwmXP79h7CzL5C	non_admin97	f
+46	Nicolas	Seron	nicolas.seron@outlook.com	$2b$10$iyFop1GVtoNfieh.kf4tyOpPmYTOZS.MMqMVzxZEd.KZZfYRj5gHq	nico_978	f
 \.
 
 
@@ -279,7 +277,7 @@ COPY public.profil (id, first_name, last_name, mail, password, pseudo, admin) FR
 -- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.comments_id_seq', 1, false);
+SELECT pg_catalog.setval('public.comments_id_seq', 33, true);
 
 
 --
@@ -288,7 +286,7 @@ SELECT pg_catalog.setval('public.comments_id_seq', 1, false);
 -- Name: images_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.images_id_seq', 223, true);
+SELECT pg_catalog.setval('public.images_id_seq', 226, true);
 
 
 --
@@ -297,7 +295,7 @@ SELECT pg_catalog.setval('public.images_id_seq', 223, true);
 -- Name: person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.person_id_seq', 36, true);
+SELECT pg_catalog.setval('public.person_id_seq', 46, true);
 
 
 --
@@ -306,7 +304,7 @@ SELECT pg_catalog.setval('public.person_id_seq', 36, true);
 -- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.posts_id_seq', 394, true);
+SELECT pg_catalog.setval('public.posts_id_seq', 397, true);
 
 
 --
@@ -381,7 +379,7 @@ ALTER TABLE ONLY public.posts
     ADD CONSTRAINT posts_id_profil_fkey FOREIGN KEY (id_profil) REFERENCES public.profil(id) NOT VALID;
 
 
--- Completed on 2024-05-15 09:29:57
+-- Completed on 2024-06-03 10:26:26
 
 --
 -- PostgreSQL database dump complete
