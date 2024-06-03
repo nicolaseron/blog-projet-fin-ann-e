@@ -48,7 +48,7 @@
       </h1>
       <div class="flex gap-8 flex-wrap justify-center">
         <PostCards
-            v-for="(post,i) in postToDisplay || []"
+            v-for="(post) in postToDisplay || []"
             :key="post.id"
             :title="post.title"
             :content="post.content"
